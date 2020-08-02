@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mrmorning.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="网络流24题是一套经典的网络流题目, 来自&lt;计算机算法设计与分析, 王晓东&gt;[^1].本题解参考了教材的官方答疑[^2], 和几位神犇orz的博客[^3][^4][^5]. 1. 飞行员配对方案问题 最大流, 二分图最大匹配  裸的二分图最大匹配. 2. 太空飞行计划问题 最小割  有一些实验, 实验需要一些仪器, 购置仪器的费用为$c_k$, 实验做出来可以获得$p_k$美元. 选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性规划与网络流24题解题报告">
+<meta property="og:url" content="mrmorning.github.io/2017/03/23/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="Chen Geng&#39;s Blog">
+<meta property="og:description" content="网络流24题是一套经典的网络流题目, 来自&lt;计算机算法设计与分析, 王晓东&gt;[^1].本题解参考了教材的官方答疑[^2], 和几位神犇orz的博客[^3][^4][^5]. 1. 飞行员配对方案问题 最大流, 二分图最大匹配  裸的二分图最大匹配. 2. 太空飞行计划问题 最小割  有一些实验, 实验需要一些仪器, 购置仪器的费用为$c_k$, 实验做出来可以获得$p_k$美元. 选择">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-23T15:47:00.000Z">
+<meta property="article:modified_time" content="2020-08-02T09:03:59.753Z">
+<meta property="article:author" content="Chen Geng">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="mrmorning.github.io/2017/03/23/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>线性规划与网络流24题解题报告 | Chen Geng's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chen Geng's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="mrmorning.github.io/2017/03/23/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%B5%8124%E9%A2%98%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Geng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen Geng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线性规划与网络流24题解题报告
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-23 15:47:00" itemprop="dateCreated datePublished" datetime="2017-03-23T15:47:00+00:00">2017-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>网络流24题是一套经典的网络流题目, 来自&lt;计算机算法设计与分析, 王晓东&gt;[^1].本题解参考了教材的官方答疑[^2], 和几位神犇orz的博客[^3][^4][^5].</p>
+<h2 id="1-飞行员配对方案问题"><a href="#1-飞行员配对方案问题" class="headerlink" title="1. 飞行员配对方案问题"></a>1. 飞行员配对方案问题</h2><ul>
+<li>最大流, 二分图最大匹配</li>
+</ul>
+<p>裸的二分图最大匹配.</p>
+<h2 id="2-太空飞行计划问题"><a href="#2-太空飞行计划问题" class="headerlink" title="2. 太空飞行计划问题"></a>2. 太空飞行计划问题</h2><ul>
+<li><p>最小割</p>
+</li>
+<li><p>有一些实验, 实验需要一些仪器, 购置仪器的费用为$c_k$, 实验做出来可以获得$p_k$美元. 选择购置哪些仪器使得</p>
+</li>
+</ul>
+<p>$$\max \sum p_k - \sum c_k$$</p>
+<ul>
+<li>显然这个题目是一个决策每个方案是否选择的问题, 可以转化成最小割模型, 我们由$s$向每个仪器连一条容量为$c_k$的边, 由实验向汇连一条容量为$p_k$的边, 这样, </li>
+</ul>
+<p>$$\sum_{E_j \in T} p_j - \sum_{I_k \in T}c_k=\sum p_j - \sum_{E_j \in S}p_j - \sum_{I_k \in T}c_k\=\sum p_j - cap[S,T]$$</p>
+<h2 id="3-star-最小路径覆盖问题"><a href="#3-star-最小路径覆盖问题" class="headerlink" title="3. $\star$最小路径覆盖问题"></a>3. $\star$最小路径覆盖问题</h2><ul>
+<li><p>二分图最大匹配, 网络流</p>
+</li>
+<li><p>给定有向图$G=(V,E)$, 设$P$是$G$的一个简单路径(顶点不相交)的集合, 如果$V$中的每个点都在$P$的一条路径上, 那么称$P$是原图的一个路径覆盖. $G$的最小路径覆盖是$G$的所含路径条数最少的路径覆盖. 求DAG$G$的最小路径覆盖.</p>
+</li>
+<li><p>我们考察一个路径覆盖的性质:</p>
+<p>1. 每个顶点属于且仅属于一个路径.<br>2. 路径上除了终点, 每个点都恰好有且仅有一条边指向路径上另一个点.</p>
+<p>可以发现这种性质类似二分图性质, 我们把点拆成两个点, 一个作为起点, 一个作为终点, 那么每一条原图中的边都对应着二分图中的一个匹配, 因为一个点仅能被一条边覆盖, 所以在二分图中每一个合法的匹配都唯一地代表了一种路径覆盖方式. 最开始的时候, 我们可以看作每个点都自身作为一个路径, 这样, 每增加一个二分图匹配, 集合的基数就减少一, 那么我们只要算出二分图的最大匹配, 用点的个数减去它就可以了. </p>
+</li>
+<li><p>这个题目的关键就是发现潜在的二分图性质.</p>
+</li>
+<li><p>注意, 这种建模方式仅限于DAG, 因为如果有环, 那么可能对应了一些环覆盖, 而不是路径覆盖.</p>
+</li>
+</ul>
+<h2 id="4-魔术球问题"><a href="#4-魔术球问题" class="headerlink" title="4. 魔术球问题"></a>4. 魔术球问题</h2><ul>
+<li>最小路径覆盖, 最大流</li>
+<li>假设有n根柱子, 按照以下规则在这n根柱子中依次放入编号为1,2,3的球,<br>1. 每次只能在某根柱子的最上面放球<br>2. 满足相邻任何一根柱子上相邻两个球的编号之和为完全平方数</li>
+<li>如果存在$i &lt; j$使得$i+j$是完全平方数, 连边$i \rightarrow j$</li>
+<li>那么对于有这样$n$个顶点的图$G$, 显然地$G$的最小路径覆盖确定了柱子数</li>
+<li>我们可以二分答案使用上面的方法验证</li>
+<li>也可以证明, $n$个柱子能够放入的最多球数为$\lfloor \frac {n^2+2n-1}2 \rfloor$.(我不会证)</li>
+</ul>
+<h2 id="5-圆桌问题"><a href="#5-圆桌问题" class="headerlink" title="5. 圆桌问题"></a>5. 圆桌问题</h2><ul>
+<li><p>最大流</p>
+</li>
+<li><p>有$n$个来自不同单位的代表, 每个单位的代表数分别为$r_i$, 会议餐厅共有$m$个餐桌, 每个餐桌可以容纳$c_i$人, 同时同一个单位的代表不能在同一个餐桌用餐.</p>
+</li>
+<li><p>不难建图:</p>
+<ul>
+<li>$s \xrightarrow{r_i}$单位</li>
+<li>单位$\xrightarrow{1}$餐桌</li>
+<li>餐桌$\xrightarrow{c_i}t$</li>
+</ul>
+<p>跑一遍最大流即可</p>
+</li>
+</ul>
+<h2 id="6-最长递增子序列问题"><a href="#6-最长递增子序列问题" class="headerlink" title="6. 最长递增子序列问题"></a>6. 最长递增子序列问题</h2><ul>
+<li>最大流</li>
+<li>给定正整数序列, 求从给定的序列中最多可以取出多少个长度为$s$的LIS.</li>
+<li>和SDOI某年一道题很相似</li>
+<li>首先如果对于$i &lt; j, f_i &lt; f_j$连边$i \rightarrow j$</li>
+<li>然后有两种做法, 一种是拆点放限制, 一种是在边上搞, 其实都无所谓.</li>
+</ul>
+<h2 id="7-试题库问题"><a href="#7-试题库问题" class="headerlink" title="7. 试题库问题"></a>7. 试题库问题</h2><ul>
+<li>最大流</li>
+<li>有$n$道试题, 知道他们所属的类型, 求一种算法使得可以出一套有$m$个题目的试卷包含$k_i$个某种类型的题目.</li>
+<li>建图: <ul>
+<li>s到每种类型, 容量$k_i$</li>
+<li>每个试题到t, 容量1</li>
+<li>试题到类型连边容量1</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-机器人路径规划问题"><a href="#8-机器人路径规划问题" class="headerlink" title="8. 机器人路径规划问题"></a>8. 机器人路径规划问题</h2><ul>
+<li><p>未解决</p>
+</li>
+<li><p>机器人在一个树上自由移动, 给定树上两点s和t, 树上有若干可移动的障碍物, 任何时刻两个物品不能在同一个节点上. 移动某个物品(机器人或障碍)的代价是1. 您需要使用最小的代价移动机器人从s到t.</p>
+</li>
+<li><p>本题是一个著名的树形路径上的路径规划问题, 成为了”网络流24题”中唯一没有得到解决的问题. 事实上, 这个问题并不是一个网络流问题, 虽然有一个$O(n^9)$的算法, 但是非常缓慢[^6], 有兴趣的同学可以参考文献[6]. </p>
+</li>
+</ul>
+<h2 id="9-方格取数问题"><a href="#9-方格取数问题" class="headerlink" title="9. 方格取数问题"></a>9. 方格取数问题</h2><ul>
+<li><p>最大流, 拆点, 二分图最大独立集</p>
+</li>
+<li><p>在一个$m \times n$的棋盘中, 每一个方格中有一个正整数, 现要从方格中取数使得取到的任意两个数不相邻, 且取出的数总和最大.</p>
+</li>
+<li><p>一看见棋盘, 不管它问什么, 我们就要先黑白染色<del>(笑)</del>. 这样, 显然格子组成了一个二分图, 然后将每个方格节点按照方格中的正整数$x$拆成$x$个顶点. 原来链接方格顶点$x$和$y$的边增加为$x \times y$条边. 由此构成的图$G’$仍然是二分图. 这样就等价于求二分图的最大独立集.</p>
+</li>
+<li><p>对于图, 我们有:</p>
+<ul>
+<li>最大独立集 + 最小顶点覆盖 = V</li>
+</ul>
+<p>对于二分图, 我们有:</p>
+<ul>
+<li>最小顶点覆盖 = 最大匹配[^7][^8]</li>
+</ul>
+</li>
+<li><p>所以我们跑一遍Dinic就解决了本题.</p>
+</li>
+</ul>
+<h2 id="10-star-餐巾计划问题"><a href="#10-star-餐巾计划问题" class="headerlink" title="10. $\star$餐巾计划问题"></a>10. $\star$餐巾计划问题</h2><ul>
+<li><p>最小费用流, 拆点, 决策分析</p>
+</li>
+<li><p>一个餐厅在连续的$N$天中, 每天需要使用的餐巾个数不尽相同. 餐厅每天有三种决策:</p>
+<ul>
+<li>买一块新餐巾, 代价p</li>
+<li>旧餐巾送到快洗店, m天后使用, 代价f</li>
+<li>旧餐巾送到慢洗店, n天后使用, 代价s</li>
+</ul>
+<p>设计一个计划使得总花费最小.</p>
+</li>
+<li><p>构造网络$G$, 每天对应图$G$的两个顶点$X_i$和$Y_i$.$X_i$表示干净, $Y_i$表示脏.</p>
+<ul>
+<li>顶点$X_i$和$X_{i+1}$连一条容量为$\infty$, 费用为$0$的边, 表示保留旧餐巾的决策.</li>
+<li>当$i+m \leqslant N$时, 顶点$X_i$和$Y_{i+m}$连一条容量为$\infty$, 费用为$f$的边, 表示快洗决策.</li>
+<li>当$i+n \leqslant N$时, 顶点$X_i$和$Y_{i+m}$连一条容量为$\infty$, 费用为$s$的边, 表示慢洗决策.</li>
+</ul>
+<p>另外增加源$s$和汇$t$, 以及附加顶点$k$</p>
+<ul>
+<li>从s向每个顶点$X_i$连一条边, 容量为第i天餐巾需求量$r_i$, 费用0.</li>
+<li>从附加顶点$k$向每个顶点$Y_i$连一条容量为$\infty$, 费用为$p$, 表示购买决策.</li>
+<li>从顶点$Y_i$向$t$连一条容量为$r_i$, 费用为0.</li>
+</ul>
+</li>
+<li><p>求网络$G$的最小网络流.</p>
+</li>
+</ul>
+<h2 id="11-航空路线问题"><a href="#11-航空路线问题" class="headerlink" title="11. 航空路线问题"></a>11. 航空路线问题</h2><ul>
+<li>拆点, 费用流</li>
+<li>给定一个带边权有向图, 求一条从$s$到$t$又从$t$到$s$的路径使得:<ul>
+<li>每个点只经过一次</li>
+<li>每条边只经过一次</li>
+<li>总权最大</li>
+</ul>
+</li>
+<li>这种每个点只能经过一次的显然要拆点建最大流模型, 又因為有边权的设定, 所以我们跑一个最大费用最大流就好了. </li>
+</ul>
+<h2 id="12-软件补丁问题"><a href="#12-软件补丁问题" class="headerlink" title="12. 软件补丁问题"></a>12. 软件补丁问题</h2><ul>
+<li><p>最小转移代价, 最短路</p>
+</li>
+<li><p>某软件有$n$个bug, $m$个补丁, 每一种补丁都有两个与之对应的bug集合$B_1[i]$和$B_2[i]$, 设当前bug集合为$S$, 补丁$i$可以发挥作用当且仅当</p>
+<p>$$S \cup B_1[i] = S \ and\ S \cap B_2[i] = \varnothing $$</p>
+<p>每个补丁可以修复的bug集合为$F_1[i]$, 会带来的新bug集合为$F_2[i]$, 另外, 每个补丁修复都需要一定的时间. 试设计一个算法, 利用$m$个补丁把原程序修复成一个没有bug的软件, 并且使得总时间最小.</p>
+</li>
+<li><p>参考文献[^2]中说这道题可以使用网络流解决, 但在我看来不如使用在隐式图中spfa解决, 具体的, 我们把状态压缩成一个二进制串, 用一个节点表示集合, 这样状态的转移对应了图中的边, 跑一遍spfa就可以解决了.</p>
+</li>
+</ul>
+<h2 id="13-星际转移问题"><a href="#13-星际转移问题" class="headerlink" title="13. 星际转移问题"></a>13. 星际转移问题</h2><ul>
+<li><p>最大流, 拆点, 利用之前增广结果</p>
+</li>
+<li><p>给定一个有向图, 图上的边周期性开放, 边有费用和容量, 现在求最小代价从$s$转移所有人到$t$.</p>
+</li>
+<li><p>首先考察原问题的反问题: 给定时间$T$, 最多可以运送多少人? </p>
+</li>
+<li><p>我们把一个点拆成$T$个点建图, 如果有一条边$(i,j)$, 那么新图中有一条边$(i, t) \xrightarrow{c(i,j)} (j, t+1)$, 同时, 又有边$(i,t) \xrightarrow{\infty} (i,t+1)$, 那么跑一下最大流就好了.</p>
+</li>
+<li><p>然后考察两种方法: 一种是二分时间$T$, 一种是从小到大枚举$T$. 看似二分好一些, 但是第二种方法可以利用之前的结果进行增广, 反而效率会高.</p>
+</li>
+</ul>
+<h2 id="14-孤岛营救问题"><a href="#14-孤岛营救问题" class="headerlink" title="14. 孤岛营救问题"></a>14. 孤岛营救问题</h2><ul>
+<li>分层图最短路</li>
+<li>题目与黑书[^9]上的第61页的题目相同, 来自CTSC 1999</li>
+<li>建分层图跑一遍spfa就好了.</li>
+</ul>
+<h2 id="15-汽车加油行驶问题"><a href="#15-汽车加油行驶问题" class="headerlink" title="15. 汽车加油行驶问题"></a>15. 汽车加油行驶问题</h2><ul>
+<li>分层图最短路</li>
+<li>设状态为$(x,y,z)$, 以状态为点, 各种决策为边建图, 跑spfa即可.</li>
+</ul>
+<h2 id="16-数字梯形问题"><a href="#16-数字梯形问题" class="headerlink" title="16. 数字梯形问题"></a>16. 数字梯形问题</h2><ul>
+<li><p>费用流</p>
+</li>
+<li><p>给定一个由n 行数字组成的数字梯形如下图所示。梯形的第一行有m 个数字。从梯形的顶部的m 个数字开始，在每个数字处可以沿左下或右下方向移动，形成一条从梯形的顶至底的路径。</p>
+</li>
+<li><p>规则一: 互不相交: 拆点费用流</p>
+</li>
+<li><p>规则二: 仅在数字处相交: 限制边, 费用流</p>
+</li>
+<li><p>规则三: 允许在数字处相交或边相交: DP</p>
+</li>
+</ul>
+<h2 id="17-运输问题"><a href="#17-运输问题" class="headerlink" title="17. 运输问题"></a>17. 运输问题</h2><ul>
+<li>费用流</li>
+<li>W 公司有m个仓库和n 个零售商店。第i 个仓库有ai个单位的货物；第j 个零售商店需要bj个单位的货物。货物供需平衡，即ai的和=bj的和。从第i 个仓库运送每单位货物到第j个零售商店的费用为cij。试设计一个将仓库中所有货物运送到零售商店的运输方案，<br>使总运输费用最少。</li>
+<li>源连仓库流量ai费用0，商店连汇流量bj费用0，每个仓库连每个商店流量无限大费用cij，跑网络流.</li>
+</ul>
+<h2 id="18-分配工作问题"><a href="#18-分配工作问题" class="headerlink" title="18. 分配工作问题"></a>18. 分配工作问题</h2><ul>
+<li>有n件工作要分配给n个人做。第i 个人做第j 件工作产生的效益为cij 。试设计一个将n件工作分配给n个人做的分配方案，使产生的总效益最大。</li>
+<li>二分图最大权匹配, KM算法.</li>
+</ul>
+<h2 id="19-负载平衡问题"><a href="#19-负载平衡问题" class="headerlink" title="19. 负载平衡问题"></a>19. 负载平衡问题</h2><ul>
+<li>G公司有$n$个环形排列的仓库, 每个仓库存储的货物数量不相等, 如何使用最少搬运量可以使$n$个仓库库存数量相同.只能在相邻仓库之间搬运</li>
+<li>不难发现任意两个仓库之间都可以视为直接搬运. 那么每个仓库的目标就是$\frac{\sum x_i}n$. 跑费用流就好了.</li>
+</ul>
+<h2 id="20-深海机器人问题"><a href="#20-深海机器人问题" class="headerlink" title="20. 深海机器人问题"></a>20. 深海机器人问题</h2><ul>
+<li>给定每个深海机器人的出发位置和目标位置, 以及每条边上生物标本的价值, 计算深海机器人们的最有移动方案使得深海机器人到达目的地后采集到的标本价值最高.</li>
+<li>把一条边拆成两条边, 第一条边容量为1, 费用为$c_i$, 第二条边容量为$\infty$, 费用为0. 建超级源汇, 跑最大费用最大流.</li>
+</ul>
+<h2 id="21-star-最长-k-可重区间集问题"><a href="#21-star-最长-k-可重区间集问题" class="headerlink" title="21. $\star$最长$k$可重区间集问题"></a>21. $\star$最长$k$可重区间集问题</h2><ul>
+<li><p>最大费用流, 最大权不相交路径</p>
+</li>
+<li><p>给定实直线$L$上$n$个开区间组成的集合$I$和一个正整数$k$, 试设计一个算法, 从$I$中选出$S \subseteq I$, 使得在实直线上的任意一点$x$, S中包含点$x$的开区间个数不超过$k$, 且$\sum_{z \in S}|z|$达到最大, 这样的集合$S$称为开区间集合$I$的最长$k$可重区间集. $\sum_{z \in S}|z|$称为最长$k$可重区间集的长度. </p>
+</li>
+<li><p>若把每个线段看做点，一组不相交的线段集合就可以看做路径。这样问题就转化为选k条路径使得权值和最大，并且路径不能重叠（一个线段只能选一次）。</p>
+</li>
+<li><p>设给定的开区间集合共有$m$个不同的端点. 将这$m$个端点从小到大排序为: $x_1, x_2, \cdots, x_m$, 构造网络$G=(V,E)$如下:</p>
+<ul>
+<li>每个端点$x_i$对应一个顶点, 新增源$s$和汇$t$.</li>
+<li>对于每一个区间$(x_i, x_j)$, 连边$x_i \xrightarrow {1, x_j-x_i} x_j$.</li>
+<li>每对顶点$(x_i, x_{i+1})$若没有边, 则增加一条有向边, 容量为$k$, 费用为$0$.</li>
+<li>$s \xrightarrow{k, 0} x_1$和$x_m \xrightarrow{k,0} t$.</li>
+</ul>
+<p>求网络的最大费用流.</p>
+</li>
+<li><p>转换思路：端点为点。同样是限制流量。而这次目标针对了【每个点至多出现k次】，而区间则成了一段有价值的点，所以可以端点之间连边来表示。并且这个做法边数更少，更优。</p>
+</li>
+</ul>
+<h2 id="22-最长-k-可重线段集问题"><a href="#22-最长-k-可重线段集问题" class="headerlink" title="22. 最长$k$可重线段集问题"></a>22. 最长$k$可重线段集问题</h2><ul>
+<li>基本同21</li>
+</ul>
+<h2 id="23-火星探险问题"><a href="#23-火星探险问题" class="headerlink" title="23. 火星探险问题"></a>23. 火星探险问题</h2><ul>
+<li>用一个P*Q 网格表示登陆舱与传送器之间的位置。登陆舱的位置在(X1,Y1)处，传送器的位置在(XP ,YQ)处。登陆舱着陆后，探测车将离开登陆舱向先期到达的传送器方向移动。探测车在移动中还必须采集岩石标本。每一块岩石标本由最先遇到它的探测车完成采集。每块岩石标本只能被采集一次。岩石标本被采集后，其他探测车可以从原来岩石标本所在处通过。探测车不能通过有障碍的地面。本题限定探测车只能从登陆处沿着向南或向东的方向朝传送器移动，而且多个探测车可以在同一时间占据同一位置。如果某个探测车在到达传送器以前不能继续前进，则该车所采集的岩石标本将全部损失.给定每个位置的状态，计算探测车的最优移动方案，使到达传送器的探测车的数量最多，而且探测车采集到的岩石标本的数量最多。</li>
+<li>把每个位置拆成两个点:<ul>
+<li>对于原图中的边, 连$i’ \xrightarrow{\infty ,0} j$</li>
+<li>对于岩石顶点, 连$i \xrightarrow{1,1}i’$</li>
+<li>对于每个非障碍顶点, 连$i \xrightarrow{\infty, 0} i’$.</li>
+<li>$s \rightarrow$登陆舱, 容量探测车数, 费用0, 传送器$\rightarrow t$, 容量探测车数, 费用0</li>
+</ul>
+</li>
+<li>最大费用最大流</li>
+</ul>
+<h2 id="24-骑士共存问题"><a href="#24-骑士共存问题" class="headerlink" title="24. 骑士共存问题"></a>24. 骑士共存问题</h2><ul>
+<li>二分图最大独立集</li>
+<li>象棋棋盘上有障碍, 最多能放置多少马使得他们之间不相互攻击.</li>
+<li>二分图染色, 最大独立集.</li>
+</ul>
+<p>$\mathtt{COPYRIGHT}© \mathtt{2017,KONJAC,MIT\ LICENSE}$</p>
+<p>[^1]: 计算机设计与分析, 王晓东, 第三版</p>
+<p>[^2]: 计算机设计与分析-习题解答, 王晓东, 第三版</p>
+<p>[^3]: <a target="_blank" rel="noopener" href="http://blog.csdn.net/orzgeotcbrl/article/details/50808548">自写网络流24题总结</a>, orzGEOTCBRL </p>
+<p>[^4]: <a href="hzwer.com">黄学长的博客</a>, hzwer </p>
+<p>[^5]: <a target="_blank" rel="noopener" href="https://www.byvoid.com/zht/blog/lpf24-solution">線性規劃與網絡流24題 解題報告</a>, BYVoid</p>
+<p>[^6]: 机器人路径规划问题(TMP1R)题解, 陈俊锟<br>[^7]: 浅谈线性规划与对偶问题, 董克凡<br>[^8]: 最小割模型在信息学竞赛中的应用, 胡伯涛<br>[^9]: 算法设计与信息学竞赛, 刘汝佳, 黄亮</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/22/bzoj4569-SCOI2016-%E8%90%8C%E8%90%8C%E5%93%92-%E5%B9%B6%E6%9F%A5%E9%9B%86-%E5%80%8D%E5%A2%9E/" rel="prev" title="[bzoj4569][SCOI2016]萌萌哒-并查集+倍增">
+      <i class="fa fa-chevron-left"></i> [bzoj4569][SCOI2016]萌萌哒-并查集+倍增
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/03/23/bzoj4567-Scoi2016-%E8%83%8C%E5%8D%95%E8%AF%8D-Trie-%E8%B4%AA%E5%BF%83-%E6%A8%A1%E5%9E%8B%E8%BD%AC%E5%8C%96/" rel="next" title="[bzoj4567][Scoi2016]背单词-Trie+贪心+模型转化">
+      [bzoj4567][Scoi2016]背单词-Trie+贪心+模型转化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A3%9E%E8%A1%8C%E5%91%98%E9%85%8D%E5%AF%B9%E6%96%B9%E6%A1%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">1. 飞行员配对方案问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A4%AA%E7%A9%BA%E9%A3%9E%E8%A1%8C%E8%AE%A1%E5%88%92%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">2. 太空飞行计划问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-star-%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3. $\star$最小路径覆盖问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%AD%94%E6%9C%AF%E7%90%83%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">4. 魔术球问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9C%86%E6%A1%8C%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">5. 圆桌问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">6. 最长递增子序列问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%AF%95%E9%A2%98%E5%BA%93%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">7. 试题库问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">8. 机器人路径规划问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%96%B9%E6%A0%BC%E5%8F%96%E6%95%B0%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">9. 方格取数问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-star-%E9%A4%90%E5%B7%BE%E8%AE%A1%E5%88%92%E9%97%AE%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">10. $\star$餐巾计划问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E8%88%AA%E7%A9%BA%E8%B7%AF%E7%BA%BF%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">11. 航空路线问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E8%BD%AF%E4%BB%B6%E8%A1%A5%E4%B8%81%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">12. 软件补丁问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E6%98%9F%E9%99%85%E8%BD%AC%E7%A7%BB%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">13. 星际转移问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-%E5%AD%A4%E5%B2%9B%E8%90%A5%E6%95%91%E9%97%AE%E9%A2%98"><span class="nav-number">14.</span> <span class="nav-text">14. 孤岛营救问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-%E6%B1%BD%E8%BD%A6%E5%8A%A0%E6%B2%B9%E8%A1%8C%E9%A9%B6%E9%97%AE%E9%A2%98"><span class="nav-number">15.</span> <span class="nav-text">15. 汽车加油行驶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-%E6%95%B0%E5%AD%97%E6%A2%AF%E5%BD%A2%E9%97%AE%E9%A2%98"><span class="nav-number">16.</span> <span class="nav-text">16. 数字梯形问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-%E8%BF%90%E8%BE%93%E9%97%AE%E9%A2%98"><span class="nav-number">17.</span> <span class="nav-text">17. 运输问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-%E5%88%86%E9%85%8D%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98"><span class="nav-number">18.</span> <span class="nav-text">18. 分配工作问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-%E8%B4%9F%E8%BD%BD%E5%B9%B3%E8%A1%A1%E9%97%AE%E9%A2%98"><span class="nav-number">19.</span> <span class="nav-text">19. 负载平衡问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-%E6%B7%B1%E6%B5%B7%E6%9C%BA%E5%99%A8%E4%BA%BA%E9%97%AE%E9%A2%98"><span class="nav-number">20.</span> <span class="nav-text">20. 深海机器人问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-star-%E6%9C%80%E9%95%BF-k-%E5%8F%AF%E9%87%8D%E5%8C%BA%E9%97%B4%E9%9B%86%E9%97%AE%E9%A2%98"><span class="nav-number">21.</span> <span class="nav-text">21. $\star$最长$k$可重区间集问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-%E6%9C%80%E9%95%BF-k-%E5%8F%AF%E9%87%8D%E7%BA%BF%E6%AE%B5%E9%9B%86%E9%97%AE%E9%A2%98"><span class="nav-number">22.</span> <span class="nav-text">22. 最长$k$可重线段集问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-%E7%81%AB%E6%98%9F%E6%8E%A2%E9%99%A9%E9%97%AE%E9%A2%98"><span class="nav-number">23.</span> <span class="nav-text">23. 火星探险问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-%E9%AA%91%E5%A3%AB%E5%85%B1%E5%AD%98%E9%97%AE%E9%A2%98"><span class="nav-number">24.</span> <span class="nav-text">24. 骑士共存问题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Geng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+      
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width:100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2-SAT/" rel="tag">2-SAT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">AC自动机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSGS/" rel="tag">BSGS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDQ%E5%88%86%E6%B2%BB/" rel="tag">CDQ分治</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFT/" rel="tag">FFT</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manacher/" rel="tag">Manacher</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTT/" rel="tag">NTT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polya%E5%AE%9A%E7%90%86/" rel="tag">Polya定理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Prufer%E7%BC%96%E7%A0%81/" rel="tag">Prufer编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trie/" rel="tag">Trie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs%E5%BA%8F%E5%88%97/" rel="tag">dfs序列</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lca/" rel="tag">lca</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lct/" rel="tag">lct</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/splay/" rel="tag">splay</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E4%B8%8B%E7%95%8C%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">上下界网络流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%B8%AD%E6%A0%91/" rel="tag">主席树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%B1%E6%90%9E/" rel="tag">乱搞</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%86/" rel="tag">二分</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" rel="tag">二分图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E4%BB%B7%E6%8F%90%E5%89%8D%E8%AE%A1%E7%AE%97/" rel="tag">代价提前计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%80%8D%E5%A2%9E/" rel="tag">倍增</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%B8%E5%8C%85/" rel="tag">凸包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%9D%97/" rel="tag">分块</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B1%82%E5%9B%BE/" rel="tag">分层图</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%95%B0%E8%A7%84%E5%88%92/" rel="tag">分数规划</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag">动态点分治</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">单调栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" rel="tag">单调队列</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/" rel="tag">博弈论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E6%A0%B9/" rel="tag">原根</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" rel="tag">后缀数组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" rel="tag">多项式</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A5%BD%E9%A2%98/" rel="tag">好题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E5%85%B8%E5%BA%8F/" rel="tag">字典序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" rel="tag">字符串哈希</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag">容斥原理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B3%E9%9D%A2%E5%9B%BE/" rel="tag">平面图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="tag">并查集</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%BF%E4%B9%89%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">广义后缀自动机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/" rel="tag">强连通分量</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%86%E7%82%B9/" rel="tag">拆点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97/" rel="tag">括号序列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%91%B8%E9%B1%BC/" rel="tag">摸鱼</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E4%BD%8DDP/" rel="tag">数位DP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86/" rel="tag">数学知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag">数论</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/" rel="tag">斜率优化</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/" rel="tag">最小割</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">权值线段树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%8E%E8%B6%85%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">李超线段树</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%9A%E4%B8%BE/" rel="tag">枚举</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E4%B8%8A%E5%80%8D%E5%A2%9E/" rel="tag">树上倍增</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%A5%97%E6%A0%91/" rel="tag">树套树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%BD%A2DP/" rel="tag">树形DP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%BD%A2dp/" rel="tag">树形dp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86/" rel="tag">树链剖分</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A8%A1%E5%9E%8B%E8%BD%AC%E5%8C%96/" rel="tag">模型转化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A8%A1%E6%9D%BF/" rel="tag">模板</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" rel="tag">欧拉函数</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag">点分治</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%B9%E6%AE%8A%E6%95%B0%E5%88%97/" rel="tag">特殊数列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8A%B6%E5%8E%8BDP/" rel="tag">状压DP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag">生成函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">生成树</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E6%A0%91%E8%AE%A1%E6%95%B0/" rel="tag">生成树计数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95/" rel="tag">矩阵乘法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5%E6%A0%91%E5%AE%9A%E7%90%86/" rel="tag">矩阵树定理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/" rel="tag">离散对数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A6%BB%E7%BA%BF%E5%A4%84%E7%90%86/" rel="tag">离线处理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" rel="tag">线性规划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">线段树</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" rel="tag">组合数学</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%93%E8%AE%BA%E9%A2%98/" rel="tag">结论题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8E%AB%E9%98%9F%E7%AE%97%E6%B3%95/" rel="tag">莫队算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%92%9F%E8%92%BB/" rel="tag">蒟蒻</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%9F%E7%8E%AF/" rel="tag">负环</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%B9%E7%94%A8%E6%B5%81/" rel="tag">费用流</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%80%E6%B5%81/" rel="tag">退流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83/" rel="tag">高斯消元</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%B2%BE%E5%BA%A6/" rel="tag">高精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%BB%98%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" rel="tag">默比乌斯反演</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Geng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

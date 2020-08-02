@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mrmorning.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MATHEMATICS3.数学知识3.1数论3.1.1扩展欧几里德算法首先我们有欧几里德算法： $$gcd(a, b) &#x3D; gcd(a\  mod\ b, b)$$ 扩展欧几里德算法解决了这样的问题： $$ ax + by &#x3D; gcd(a,b)$$ 我们先考察一种特殊的情况： 当$b&#x3D;0$时，我们直接可以有解：$$\begin{eqnarray}\left{\begin{array}{lll}x">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chen Geng&#39;s Blog">
+<meta property="og:url" content="mrmorning.github.io/template/3.MATHEMATICS.html">
+<meta property="og:site_name" content="Chen Geng&#39;s Blog">
+<meta property="og:description" content="MATHEMATICS3.数学知识3.1数论3.1.1扩展欧几里德算法首先我们有欧几里德算法： $$gcd(a, b) &#x3D; gcd(a\  mod\ b, b)$$ 扩展欧几里德算法解决了这样的问题： $$ ax + by &#x3D; gcd(a,b)$$ 我们先考察一种特殊的情况： 当$b&#x3D;0$时，我们直接可以有解：$$\begin{eqnarray}\left{\begin{array}{lll}x">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-02T09:03:59.753Z">
+<meta property="article:modified_time" content="2020-08-02T09:03:59.753Z">
+<meta property="article:author" content="Chen Geng">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="mrmorning.github.io/template/3.MATHEMATICS">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title> | Chen Geng's Blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chen Geng's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="MATHEMATICS"><a href="#MATHEMATICS" class="headerlink" title="MATHEMATICS"></a>MATHEMATICS</h1><h2 id="3-数学知识"><a href="#3-数学知识" class="headerlink" title="3.数学知识"></a>3.数学知识</h2><h3 id="3-1数论"><a href="#3-1数论" class="headerlink" title="3.1数论"></a>3.1数论</h3><h4 id="3-1-1扩展欧几里德算法"><a href="#3-1-1扩展欧几里德算法" class="headerlink" title="3.1.1扩展欧几里德算法"></a>3.1.1扩展欧几里德算法</h4><p>首先我们有欧几里德算法：</p>
+<p>$$gcd(a, b) = gcd(a\  mod\ b, b)$$</p>
+<p>扩展欧几里德算法解决了这样的问题：</p>
+<p>$$ ax + by = gcd(a,b)$$</p>
+<p>我们先考察一种特殊的情况：</p>
+<p>当$b=0$时，我们直接可以有解：<br>$$<br>\begin{eqnarray}<br>\left{<br>\begin{array}{lll}<br>x = 1 \<br>y = 0<br>\end{array}<br>\right.<br>\end{eqnarray}<br>$$<br>一般地，我们令$c = a\ mod \ b$，递归地解下面的方程：</p>
+<p>$$bx^{‘}+cy^{‘}=gcd(b,c)$$ </p>
+<p>根据欧几里德算法，有</p>
+<p>$$bx^{‘}+cy^{‘}=gcd(a,b)$$</p>
+<p>根据$mod$的定义我们可以有</p>
+<p>$$c = a - b\lfloor\frac{a}{b}\rfloor$$</p>
+<p>带入原式</p>
+<p>$$bx^{‘}+(a - b\lfloor\frac{a}{b}\rfloor)y^{‘}=gcd(a,b)$$</p>
+<p>为了体现与$a,b$的关系</p>
+<p>$$ay^{‘}+b(x^{‘}-\lfloor\frac{a}{b}\rfloor y^{‘})=gcd(a,b)$$</p>
+<p>所以这样就完成了回溯。</p>
+<p>这个算法的思想体现在了下面的程序里。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> &amp;d, <span class="keyword">int</span> &amp;x, <span class="keyword">int</span> &amp;y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!b) &#123;d = a; x = <span class="number">1</span>; y = <span class="number">0</span>; &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123; gcd(b, a%b, d, y, x); y -= x * (a/b); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-2线性筛与积性函数"><a href="#3-1-2线性筛与积性函数" class="headerlink" title="3.1.2线性筛与积性函数"></a>3.1.2线性筛与积性函数</h4><h5 id="3-1-2-1线性筛素数"><a href="#3-1-2-1线性筛素数" class="headerlink" title="3.1.2.1线性筛素数"></a>3.1.2.1线性筛素数</h5><p>首先给出线性筛素数的程序。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_su</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  tot = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!check[i]) prime[tot++] = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; tot; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(i * prime[j] &gt; n) <span class="keyword">break</span>;</span><br><span class="line">      check[i * prime[j]] = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">if</span>(i % prime[j] == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以证明的是，每个合数都仅仅会被他的最小质因数筛去，这段代码的时间复杂度是$\Theta (n)$的，也就是所谓线性筛。</p>
+<blockquote>
+<p>证明：设合数$n$最小的质因数为$p$，它的另一个大于$p$的质因数为$p^{‘}$，另$n = pm=p^{‘}m^{‘}$。 观察上面的程序片段，可以发现$j$循环到质因数$p$时合数n第一次被标记（若循环到$p$之前已经跳出循环，说明$n$有更小的质因数），若也被$p^{‘}$标记，则是在这之前（因为$m^{‘}&lt;m$），考虑$i$循环到$m^{‘}$，注意到$n=pm=p^{‘}m^{‘}$且$p,p^{‘}$为不同的质数，因此$p|m^{‘}$，所以当j循环到质数p后结束，不会循环到$p^{‘}$，这就说明$n$不会被$p^{‘}$筛去。</p>
+</blockquote>
+<h5 id="3-1-2-2积性函数"><a href="#3-1-2-2积性函数" class="headerlink" title="3.1.2.2积性函数"></a>3.1.2.2积性函数</h5><ul>
+<li>考虑一个定义域为$\mathbb{N}^{+}$的函数$f$（数论函数），对于任意两个<strong>互质</strong>的正整数$a,b$，均满足</li>
+</ul>
+<p>$$f(ab) = f(a)f(b)$$，则函数<em>f</em>被称为积性函数。</p>
+<ul>
+<li>如果对于任意两个正整数$a,b$，都有$f(ab)=f(a)f(b)$，那么就被称作完全积性函数。</li>
+</ul>
+<p>容易看出，对于任意积性函数，$f(1)=1$。</p>
+<ul>
+<li>考虑一个大于1的正整数$N$，设$N = \prod p_{i}^{a_i}$，那么</li>
+</ul>
+<p>$$f(N)=f(\prod p_i^{a_i})=\prod f(p_i^{a_i})$$，如果$f$还满足完全积性，那么</p>
+<p>$$f(N)=\prod f(p_i)^{a_i}$$</p>
+<ul>
+<li>如果$f$是一个任意的函数，它使得和式$g(m) = \sum_{d|m}f(d)$为积性函数，那么$f$也一定是积性函数。</li>
+<li>积性函数的Dirichlet前缀和也是积性函数。这个定理是上面定理的反命题。</li>
+<li>两个积性函数的Dirichlet卷积也是积性函数。</li>
+</ul>
+<h5 id="3-1-2-3欧拉函数-varphi"><a href="#3-1-2-3欧拉函数-varphi" class="headerlink" title="3.1.2.3欧拉函数$\varphi$"></a>3.1.2.3欧拉函数$\varphi$</h5><ul>
+<li>$\varphi(n)$表示$1..n$中与$n$互质的整数个数。</li>
+<li>我们有欧拉定理：</li>
+</ul>
+<p>$$n^{\varphi(m)}\equiv 1 \pmod m\ \ \ \ n\perp m$$</p>
+<p>可以使用这个定理计算逆元。</p>
+<ul>
+<li>如果$m$是一个素数幂，则容易计算$\varphi(m)$，因为有$n \perp p^{k} \Leftrightarrow p \nmid n $ 。在${0,1,…,p^k-1}$中的$p$的倍数是${0, p, 2p, …, p^k-p}$，从而有$p^{k-1}$个，剩下的计入$\varphi(p^k)$</li>
+</ul>
+<p>$$\varphi(p^k) = p^k-p^{k-1}=(p-1)p^{k-1}$$</p>
+<ul>
+<li>由上面的推导我们不难得出欧拉函数一般的表示：</li>
+</ul>
+<p>$$\varphi(m) = \prod_{p|m}(p^{m_p}-p^{m_p-1}) = m \prod_{p|m}(1-\frac{1}{p})=\prod(p-1)p^{m_p-1}$$</p>
+<ul>
+<li>运用Mobius反演，不难得出$\sum_{d|n}\varphi(d) = n$。</li>
+<li>当$n&gt;1$时，$1..n$中与$n$互质的整数和为$\frac{n\varphi(n)}{2}$</li>
+<li>降幂大法$$A^B\ mod\ C=A^{B\ mod\ \varphi(C)+\varphi(C)}\ mod\ C$$</li>
+</ul>
+<h5 id="3-1-2-4线性筛法求解积性函数"><a href="#3-1-2-4线性筛法求解积性函数" class="headerlink" title="3.1.2.4线性筛法求解积性函数"></a>3.1.2.4线性筛法求解积性函数</h5><ul>
+<li>积性函数的关键是如何求$f(p^k)$。</li>
+<li>观察线性筛法中的步骤，筛掉n的同时还得到了他的最小的质因数$p$，我们希望能够知道$p$在$n$中的次数，这样就能够利用$f(n)=f(p^k)f(\frac{n}{p^k})$求出$f(n)$。</li>
+<li>令$n=pm$，由于$p$是$n$的最小质因数，若$p^2|n$，则$p|m$，并且$p$也是$m$的最小质因数。这样在筛法的同时，记录每个合数最小质因数的次数，就能算出新筛去合数最小质因数的次数。</li>
+<li>但是这样还不够，我们还要能够快速求解$f(p^k)$，这时一般就要结合$f$函数的性质来考虑。</li>
+<li>例如欧拉函数$\varphi$，$\varphi(p^k)=(p-1)p^{k-1}$，因此进行筛法求$\varphi(p<em>m)$时，如果$p|m$，那么$p</em>m$中$p$的次数不为1,所以我们可以从$m$中分解出$p$，那么$\varphi(p*m) = \varphi(m) * p$，否则$\varphi(p * m) =\varphi(m) * (p-1)$。</li>
+</ul>
+<ul>
+<li>再例如默比乌斯函数$\mu$，只有当$k=1$时$\mu(p^k)=-1$，否则$\mu(p^k)=0$，和欧拉函数一样根据$m$是否被$p$整除判断。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linear_Shaker</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">  phi[<span class="number">1</span>] = mu[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!phi[i]) &#123;</span><br><span class="line">      phi[i] = i - <span class="number">1</span>;</span><br><span class="line">      mu[i] = <span class="number">-1</span>;</span><br><span class="line">      prime[cnt++] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cnt; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (prime[j] * i &gt; N)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">if</span> (i % prime[j] == <span class="number">0</span>) &#123;</span><br><span class="line">        phi[i * prime[j]] = phi[i] * prime[j];</span><br><span class="line">        mu[i * prime[j]] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        phi[i * prime[j]] = phi[i] * (prime[j] - <span class="number">1</span>);</span><br><span class="line">        mu[i * prime[j]] = -mu[i];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">    phi[i] += phi[i - <span class="number">1</span>];</span><br><span class="line">    mu[i] += mu[i - <span class="number">1</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-1-2-5线性筛逆元"><a href="#3-1-2-5线性筛逆元" class="headerlink" title="3.1.2.5线性筛逆元"></a>3.1.2.5线性筛逆元</h5><p>令$f(i)$为$i$在$mod\ p$意义下的逆元。显然这个函数是积性函数，我们可以使用线性筛求。但是其实没有那么麻烦。</p>
+<p>我们设$p = ki+r$，那么$ki+r \equiv 0 (mod\ p)$，两边同时乘$i^{-1}r^{-1}$，有$kr^{-1}+i^{-1}\equiv 0$，那么$i^{-1} \equiv -kr^{-1}=-\lfloor \frac {p}{i} \rfloor * (p \ mod\ i)^{-1}$，这样就可以递推了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getinv</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  inv[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= x; i++)</span><br><span class="line">    inv[i] = (<span class="keyword">long</span> <span class="keyword">long</span>)(p - p/i)*inv[p % i] % p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了逆元，我们就可以预处理阶乘的逆元</p>
+<p>$$n!^{-1} \equiv \prod_{k=1}^n k^{-1}\ mod \ p$$</p>
+<h4 id="3-1-3默比乌斯反演与狄利克雷卷积"><a href="#3-1-3默比乌斯反演与狄利克雷卷积" class="headerlink" title="3.1.3默比乌斯反演与狄利克雷卷积"></a>3.1.3默比乌斯反演与狄利克雷卷积</h4><h5 id="3-1-3-1初等积性函数-mu"><a href="#3-1-3-1初等积性函数-mu" class="headerlink" title="3.1.3.1初等积性函数$\mu$"></a>3.1.3.1初等积性函数$\mu$</h5><p>$\mu$就是容斥系数。<br>$$<br>\mu(n) =<br>\begin{cases}<br>0,  &amp; \text{if $\exists x^2|n$} \<br>(-1)^k&amp;n=\prod_\limits{i=1}^{k}p_i \<br>\end{cases}<br>$$<br>$\mu$函数也是一个积性函数。</p>
+<p>下面的公式可以从容斥的角度理解。<br>$$<br>\sum_{d|n}\mu(d)=[n=1]<br>$$</p>
+<h5 id="3-1-3-2默比乌斯反演"><a href="#3-1-3-2默比乌斯反演" class="headerlink" title="3.1.3.2默比乌斯反演"></a>3.1.3.2默比乌斯反演</h5><p>首先给出Mobius反演的公式：</p>
+<p>$$<br>F(n)=\sum_{d|n}f(d) \Rightarrow f(n)=\sum_{d|n}\mu(\frac{n}{d})F(d)<br>$$<br>有两种常见的证明，一种是运用Dirichlet卷积，一种是使用初等方法。</p>
+<p>证明：<br>$$<br>\sum_{d|n}\mu(d)F(\frac{n}{d}) = \sum_{d|n}\mu(\frac{n}{d})F(d)=\sum_{d|n}\mu(\frac{n}{d})\sum_{k|d}f(k)\=\sum_{d|n}\sum_{k|d}\mu(\frac{n}{d})f(k)=\sum_{k|n}\sum_{d|\frac{n}{k}}\mu(\frac{n}{kd})f(k)\<br>=\sum_{k|n}\sum_{d|\frac{n}{k}}\mu(d)f(k)=\sum_{k|n}[\frac{n}{k} = 1]f(k)=f(n)<br>$$<br>默比乌斯反演的另一种形式：<br>$$<br>F(n)=\sum_{n|d}f(d)\Rightarrow f(n)=\sum_{n|d}\mu(\frac{d}{n})F(d)<br>$$<br>这个式子的证明与上式大同小异，我在这里写一下关键步骤<br>$$<br>\sum_{n|d}\sum_{d|k}\mu(\frac{d}{n})f(k)=\sum_{n|k}\sum_{d|\frac{k}{n}}\mu(d)f(k)=f(n)<br>$$<br>对于一些函数$f(n)$，如果我们很难直接求出他的值，而容易求出倍数和或者因数和$F(n)$，那么我们可以通过默比乌斯反演来求得$f(n)$的值</p>
+<h5 id="3-1-3-3狄利克雷卷积"><a href="#3-1-3-3狄利克雷卷积" class="headerlink" title="3.1.3.3狄利克雷卷积"></a>3.1.3.3狄利克雷卷积</h5><p>定义两个数论函数$f(x)$,$g(x)$的$Dirichlet$卷积<br>$$<br>(f*g)(n)=\sum_{d|n}f(d)g(\frac nd)<br>$$<br>Dirichlet卷积满足交换律，结合律，分配律，单位元。</p>
+<p>运用狄利克雷卷积不难证明默比乌斯反演。</p>
+<h4 id="3-1-4积性函数求和与杜教筛"><a href="#3-1-4积性函数求和与杜教筛" class="headerlink" title="3.1.4积性函数求和与杜教筛"></a>3.1.4积性函数求和与杜教筛</h4><h5 id="3-1-4-1概述"><a href="#3-1-4-1概述" class="headerlink" title="3.1.4.1概述"></a>3.1.4.1概述</h5><p><strong>如果能通过狄利克雷卷积构造一个更好计算前缀和的函数，且用于卷积的另一个函数也易计算，则可以简化计算过程。</strong></p>
+<p>设$f(n)$为一个数论函数，需要计算$S(n)=\sum_{i=1}^n f(i)$。</p>
+<p>根据函数$f(n)$的性质，构造一个$S(n)$关于$S(\lfloor \frac ni \rfloor)$的递推式，如下例：</p>
+<p>找到一個合适的数论函数$g(x)$<br>$$<br>\sum_{i=1}^n\sum_{d|i}f(d)g(\frac id)=\sum_{i=1}^ng(i)S(\lfloor\frac ni\rfloor)<br>$$<br>可以得到递推式<br>$$<br>g(1)S(n)=\sum_{i=1}^n(f*g)(i)-\sum_{i=2}^ng(i)S(\lfloor \frac{n}{i}\rfloor)<br>$$<br>在递推计算$S(n)$的过程中，需要被计算的$S(\lfloor \frac ni \rfloor)$只有$O(\sqrt n)$种。</p>
+<h5 id="3-1-4-1欧拉函数求前缀和"><a href="#3-1-4-1欧拉函数求前缀和" class="headerlink" title="3.1.4.1欧拉函数求前缀和"></a>3.1.4.1欧拉函数求前缀和</h5><p>利用$\varphi * I=id$的性质，可以有：<br>$$<br>S(n)=\sum_{i=1}^ni-\sum_{i=2}^nS(\lfloor \frac ni\rfloor)<br>$$</p>
+<h5 id="3-1-4-2默比乌斯函数前缀和"><a href="#3-1-4-2默比乌斯函数前缀和" class="headerlink" title="3.1.4.2默比乌斯函数前缀和"></a>3.1.4.2默比乌斯函数前缀和</h5><p>利用$\mu * I = e$的性质，可以有：<br>$$<br>S(n)=1-\sum_{i=2}^nS(\lfloor\frac ni\rfloor)<br>$$</p>
+<h5 id="3-1-4-3模板"><a href="#3-1-4-3模板" class="headerlink" title="3.1.4.3模板"></a>3.1.4.3模板</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">get_p</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> (x &lt;= m) ? phi[x] : p[n / x]; &#125;;</span><br><span class="line"><span class="function">ll <span class="title">get_q</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> (x &lt;= m) ? mu[x] : q[n / x]; &#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(ll x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (x &lt;= m)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">int</span> i, last = <span class="number">1</span>, t = n / x;</span><br><span class="line">  <span class="keyword">if</span> (vis[t])</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  vis[t] = <span class="number">1</span>;</span><br><span class="line">  p[t] = ((x + <span class="number">1</span>) * x) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  q[t] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (last &lt; x) &#123;</span><br><span class="line">    i = last + <span class="number">1</span>;</span><br><span class="line">    last = x / (x / i);</span><br><span class="line">    solve(x / i);</span><br><span class="line">    p[t] -= get_p(x / i) * (last - i + <span class="number">1</span>);</span><br><span class="line">    q[t] -= get_q(x / i) * (last - i + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//注：本代码为了避免数组过大，p[]和q[]记录的是分母的值。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-5中国剩余定理"><a href="#3-1-5中国剩余定理" class="headerlink" title="3.1.5中国剩余定理"></a>3.1.5中国剩余定理</h4><p>中国剩余定理给出了以下的一元线性同余方程组有解的判定条件：<br>$$<br>\left{<br>\begin{array}{c}<br>x \equiv a_1 \pmod {m_1}\<br>x \equiv a_2 \pmod {m_2}\<br>\vdots \<br>x \equiv a_n \pmod {m_n}<br>\end{array}<br>\right.<br>$$<br>中国剩余定理指出，如果模数两两互质，那么方程组有解，并且通解可以构造得到：</p>
+<ol>
+<li>设$M = \prod_{i=1}^n m_i$，并设$M_i=\frac{M}{m_i}$。</li>
+<li>设$t_i=M_i^{-1} \pmod {m_i}$。</li>
+<li>那么通解$x = \sum_{i=1}^n a_it_iM_i$。 </li>
+</ol>
+<h4 id="3-1-6高斯消元"><a href="#3-1-6高斯消元" class="headerlink" title="3.1.6高斯消元"></a>3.1.6高斯消元</h4><p>Gauss消元法就是使用初等行列式变换把原矩阵转化为上三角矩阵然后回套求解。给定一个矩阵以后，我们考察每一个变量，找到它的系数最大的一行，然后根据这一行去消除其他的行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> a[N][N]</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Gauss</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> r=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">abs</span>(a[j][i])&gt;<span class="built_in">abs</span>(a[r][i])) r=j;</span><br><span class="line">        <span class="keyword">if</span>(r!=i) <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n+<span class="number">1</span>;j++) swap(a[i][j],a[r][j]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">            <span class="keyword">double</span> t=a[j][i]/a[i][i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=n+<span class="number">1</span>;k++) a[j][k]-=a[i][k]*t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=n;j&gt;i;j--) a[i][n+<span class="number">1</span>]-=a[j][n+<span class="number">1</span>]*a[i][j];</span><br><span class="line">        a[i][n+<span class="number">1</span>]/=a[i][i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于xor运算，我们可以使用同样的方法消元。</p>
+<p>另外，xor的话可以使用bitset压位以加速求解。</p>
+<h4 id="3-1-7大步小步BSGS算法"><a href="#3-1-7大步小步BSGS算法" class="headerlink" title="3.1.7大步小步BSGS算法"></a>3.1.7大步小步BSGS算法</h4><p>大步小步算法用于解决：</p>
+<p>已知$A,B,C$，求$x$使得, 其中$C\ is\ a\ prime$.<br>$$<br>A^x\equiv B\pmod C<br>$$<br>我们令$x=i\times m-\frac{j}{m}=\lceil \sqrt C \rceil, i \in [1,m], j \in [0,m]$</p>
+<p>那么原式就变成了$$A^{im}=A^j\times B$$ .我们先枚举$j$，把$A^j \times B$加入哈希表，然后枚举$i$，在表中查找$A^{im}$，如果找到了，就找到了一个解。时间复杂度为$\Theta (\sqrt n)$。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ll <span class="title">BSGS</span><span class="params">(ll A, ll B, ll C)</span> </span>&#123;</span><br><span class="line">    mp.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="keyword">if</span>(A % C == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-2</span>;</span><br><span class="line">    ll m = <span class="built_in">ceil</span>(<span class="built_in">sqrt</span>(C));</span><br><span class="line">    ll ans;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(i == <span class="number">0</span>) &#123;</span><br><span class="line">            ans = B % C;</span><br><span class="line">            mp[ans] = i;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ans = (ans * A) % C;</span><br><span class="line">        mp[ans] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    ll t = <span class="built_in">pow</span>(A, m, C); </span><br><span class="line">    ans = t;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(i != <span class="number">1</span>)ans = ans * t % C;</span><br><span class="line">        <span class="keyword">if</span>(mp.count(ans)) &#123;</span><br><span class="line">            <span class="keyword">int</span> ret = i * m % C - mp[ans] % C;</span><br><span class="line">            <span class="keyword">return</span> (ret % C + C)%C;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-2</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2组合数学"><a href="#3-2组合数学" class="headerlink" title="3.2组合数学"></a>3.2组合数学</h3><h4 id="3-2-1组合计数与二项式定理"><a href="#3-2-1组合计数与二项式定理" class="headerlink" title="3.2.1组合计数与二项式定理"></a>3.2.1组合计数与二项式定理</h4><h5 id="3-2-1-1二项式定理"><a href="#3-2-1-1二项式定理" class="headerlink" title="3.2.1.1二项式定理"></a>3.2.1.1二项式定理</h5><p>$$<br>（a+b)^n=\sum_{i=0}^n C_n^i a^{i}b^{n-i}<br>$$</p>
+<p>其中$C_n^m$为二项式系数，满足几个结论：<br>$$<br>C_n^i=C_n^{n-i}<br>$$</p>
+<p>$$<br>C_{n+1}^m=C_n^m+C_n^{m-1}<br>$$</p>
+<p>$$<br>\sum_{i=0}^nC_n^i=2^n<br>$$</p>
+<p>$$<br>C_n^k=\frac{k}{n}C_{n-1}^{k-1}<br>$$</p>
+<h5 id="3-2-1-2排列组合"><a href="#3-2-1-2排列组合" class="headerlink" title="3.2.1.2排列组合"></a>3.2.1.2排列组合</h5><ul>
+<li><p>隔板法与插空法</p>
+</li>
+<li><p>n元素集合的循环r排列的数目是$\frac{P_n^r}r$</p>
+</li>
+<li><p>多重集合全排列$$\frac{n!}{\prod_i n_i!}$$</p>
+</li>
+<li><p>多重集合的组合，无限重复数，设S是有k种类型对象的多重集合，r组合的个数为$$C_{r+k-1}^r=C_{r+k-1}^{k-1}$$。</p>
+</li>
+<li><p>$Lucas$定理(p为素数) ：<br>$$<br>C_n^m \equiv C_{n / p}^{m/p} \times C_{n \ mod\ p}^{m\ mod\ p} \pmod p<br>$$</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m, <span class="keyword">int</span> P)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">if</span> (n &lt; m) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> (ll)fac[n] * inv(fac[n-m], P) % P * inv(fac[m], P)%P;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lucas</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m, <span class="keyword">int</span> P)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!n &amp;&amp; !m) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (ll)lucas(n/P, m/P, P) * C(n%P, m%P, P) % P;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-2常见数列"><a href="#3-2-2常见数列" class="headerlink" title="3.2.2常见数列"></a>3.2.2常见数列</h4><ul>
+<li>错位排列 $$D_n = (n-1) * (D_{n-1} + D_{n-2})$$</li>
+<li>Catanlan数<br>$$C(n) = \sum (C(n-I) * C(I))$$<br>计算公式：<br>$$C(n) = \frac{C(2n,n)}{n+1}$$<br>应用：<br>满足递推关系的均可表示成catalan数，比如：<br>出栈顺序，二叉树种类个数，门票问题，格子问题（不穿过对角线），括号配对问题等等。</li>
+</ul>
+<h4 id="3-2-3置换群与-Polya-定理"><a href="#3-2-3置换群与-Polya-定理" class="headerlink" title="3.2.3置换群与$Polya$定理"></a>3.2.3置换群与$Polya$定理</h4><ul>
+<li>$Burnside$引理($Z_k$:$k$不动置换类,$c_1(a)$:一阶循环的个数:<br>$$l=\frac1{|G|}\sum_{k=1}^n|Z_k|=\frac1{|G|}\sum_{j=1}^gc_1(a_j)$$</li>
+<li>设置换群G作用于有限集合χ上，用k种颜色涂染集合χ中的元素，则χ在G作用下等价类的数目为($m(f)$为置换$f$的循环节)：$$N=\frac 1{|G|}\sum_{f \in G}k^{m(f)}$$</li>
+</ul>
+<h4 id="3-2-4容斥原理"><a href="#3-2-4容斥原理" class="headerlink" title="3.2.4容斥原理"></a>3.2.4容斥原理</h4><p>$$<br>|\cup_{i=1}^nA_i|=\sum_{i=1}^nA_i-\sum_{i,j:i\not=j}|A_i \cap A_j|+\sum_{i,j,k:i\not=j\not=k}|A_i \cap A_j \cap A_k|-\cdots \pm |A_1 \cap \cdots \cap A_n|<br>$$</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">calc</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; ct); i++) &#123;</span><br><span class="line">        <span class="comment">//do sth</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; ct; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &amp; (<span class="number">1</span> &lt;&lt; j)) &#123;</span><br><span class="line">                cnt++;</span><br><span class="line">                <span class="comment">//do sth </span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(cnt &amp; <span class="number">1</span>) ans += tmp;</span><br><span class="line">        <span class="keyword">else</span> ans -= tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3常见结论与技巧"><a href="#3-3常见结论与技巧" class="headerlink" title="3.3常见结论与技巧"></a>3.3常见结论与技巧</h3><h4 id="3-3-1裴蜀定理"><a href="#3-3-1裴蜀定理" class="headerlink" title="3.3.1裴蜀定理"></a>3.3.1裴蜀定理</h4><p>若a,b是整数,且（a,b)=d，那么对于任意的整数x,y,ax+by都一定是d的倍数，特别地，一定存在整数x,y，使ax+by=d成立。</p>
+<p>它的一个重要推论是：a,b互质的充要条件是存在整数x,y使ax+by=1.</p>
+<h4 id="3-3-2底和顶"><a href="#3-3-2底和顶" class="headerlink" title="3.3.2底和顶"></a>3.3.2底和顶</h4><ul>
+<li>若连续且单调增的函数$f(x)$满足当$f(x)$为整数时可推出$x$为整数，则$$\lfloor f(x) \rfloor = \lfloor f(\lfloor x \rfloor) \rfloor$$和$\lceil f(x) \rceil = \lceil f(\lceil x\rceil) \rceil$</li>
+<li>$$\lfloor \frac {\lfloor\frac{x}{a} \rfloor}{b}\rfloor = \lfloor \frac{x}{ab}\rfloor$$</li>
+<li>对于$i$，$\lfloor \frac{n}{\lfloor \frac{n}{i}\rfloor}\rfloor$是与$i$被$n$除并下取整取值相同的一段区间的右端点</li>
+</ul>
+<h4 id="3-3-3和式"><a href="#3-3-3和式" class="headerlink" title="3.3.3和式"></a>3.3.3和式</h4><h5 id="3-3-3-1三大定律"><a href="#3-3-3-1三大定律" class="headerlink" title="3.3.3.1三大定律"></a>3.3.3.1三大定律</h5><ul>
+<li><p>分配律 $$\sum_{k \in K} c a_k = c \sum_{k \in K} a_k$$</p>
+</li>
+<li><p>结合律$$\sum_{k \in K}(a_k + b_k)=\sum_{k \in K}a_k+\sum_{k \in K}b_k$$</p>
+</li>
+<li><p>交换律$$\sum_{k \in K}a_k=\sum_{p(k) \in K} a_{p(k)}$$其中p(k)是n的一个排列</p>
+</li>
+<li><p>松弛的交换律:若对于每一个整数$n$，都恰好存在一个整数$k$使得$p(k)=n$，那么交换律同样成立。</p>
+<h5 id="3-3-3-2求解技巧"><a href="#3-3-3-2求解技巧" class="headerlink" title="3.3.3.2求解技巧"></a>3.3.3.2求解技巧</h5></li>
+<li><p>扰动法，用于计算一个和式，其思想是从一个未知的和式开始，并记他为$S_n$：$$S_n=\sum_{0 \leqslant k \leqslant n} a_k$$，然后，通过将他的最后一项和第一项分离出来，用两种方法重写$S_{n+1}$，这样我们就得到了一个关于$S_n$的方程，就可以得到其封闭形式了。</p>
+</li>
+<li><p>一个常见的交换<br>$$\sum_{d|n}f(d)=\sum_{d|n}f(\frac{n}{d})$$</p>
+<h5 id="3-3-3-3多重和式"><a href="#3-3-3-3多重和式" class="headerlink" title="3.3.3.3多重和式"></a>3.3.3.3多重和式</h5></li>
+<li><p>交换求和次序：</p>
+</li>
+</ul>
+<p>$$<br>\sum_j\sum_ka_{j,k}[P(j,k)]=\sum_{P(j,k)}a_{j,k}=\sum_k\sum_ja_{j,k}[P(j,k)]<br>$$</p>
+<ul>
+<li><p>一般分配律：$$\sum_{j \in J, k \in K}a_jb_k=(\sum_{j \in J}a_j)(\sum_{k \in K}b_k)$$</p>
+</li>
+<li><p>$Rocky\ Road$<br>$$<br>\sum_{j \in J}\sum_{k \in K(j)}a_{j,k}=\sum_{k \in K^{‘}}\sum_{j \in J^{‘}}a_{j,k}<br>$$</p>
+</li>
+</ul>
+<p>$$<br>[j \in J][k \in K(j)]=[k \in K^{‘}][j \in J^{‘}(k)]<br>$$</p>
+<p>事实上，这样的因子分解总是可能的：我们可以设$J=K^{‘}$是所有整数的集合，而$K(j)$和$J^{‘}(K)$是与操控二重和式的性质$P(j,k)$相对应的集合。下面是一个特别有用的分解。</p>
+<p>$$[1\leqslant j \leqslant n][j \leqslant k \leqslant n] = [1 \leqslant j \leqslant k \leqslant n] = [1 \leqslant k \leqslant n][1 \leqslant j \leqslant k]$$</p>
+<ul>
+<li><p>一个常见的分解<br>$$<br>\sum_{d|n}\sum_{k|d}=\sum_{k|m}\sum_{d|\frac{m}{k}}<br>$$</p>
+</li>
+<li><p>一个技巧</p>
+<p>如果我们有一个包含$k+f(j)$的二重和式，用$k-f(j)$替换$k$并对$j$求和比较好。</p>
+</li>
+</ul>
+<p>####3.3.4数论问题的求解技巧</p>
+<ul>
+<li>${\lfloor \frac{n}{i} \rfloor|i \in [1,n]}$只有$O(\sqrt n)$种取值。所以可以使用这个结论降低复杂度。</li>
+</ul>
+<p>例如，在bzoj2301中，我们最终解出了$$f(n, m)=\sum_{1 \leqslant d \leqslant min(n, m)}\mu(d)\lfloor \frac {n}{d} \rfloor \lfloor \frac {m}{d} \rfloor$$我们就可以使用杜教筛计算出默比乌斯函数的前缀和，计算出商与除以i相同的最多延伸到哪里，下一次直接跳过这一段就好了。下面是这个题的一段程序。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>, last;</span><br><span class="line">    <span class="keyword">if</span>(n &gt; m) <span class="built_in">std</span>::swap(n, m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i = last + <span class="number">1</span>) &#123; <span class="comment">//i就相当于原式中的d</span></span><br><span class="line">        last = <span class="built_in">min</span>(n / (n/i), m / (m/i));  <span class="comment">//last计算了商与除以i相同的最多延伸到哪里，不难证明这样计算的正确性</span></span><br><span class="line">        ret += (n / i) * (m / i) * (sum[last] - sum[i<span class="number">-1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-5一些可能会用到的定理"><a href="#3-3-5一些可能会用到的定理" class="headerlink" title="3.3.5一些可能会用到的定理"></a>3.3.5一些可能会用到的定理</h4><h5 id="3-3-5-1费马小定理"><a href="#3-3-5-1费马小定理" class="headerlink" title="3.3.5.1费马小定理"></a>3.3.5.1费马小定理</h5><p>$$<br>a^{p-1}\equiv1\pmod p<br>$$</p>
+<p>条件：$p\ is\ prime\ and\ (a,p)=1$</p>
+<h5 id="3-3-5-2欧拉定理"><a href="#3-3-5-2欧拉定理" class="headerlink" title="3.3.5.2欧拉定理"></a>3.3.5.2欧拉定理</h5><p>$$<br>a^{\varphi(p)}\equiv 1\pmod p<br>$$</p>
+<p>条件：$a,p \in \mathbb{Z^+}, (a, p)=1$</p>
+<h5 id="3-3-5-3威尔逊定理"><a href="#3-3-5-3威尔逊定理" class="headerlink" title="3.3.5.3威尔逊定理"></a>3.3.5.3威尔逊定理</h5><p>$$<br>(p-1)!\equiv-1\pmod p \Leftrightarrow p\ is\ prime<br>$$</p>
+<h5 id="3-3-5-4皮克定理"><a href="#3-3-5-4皮克定理" class="headerlink" title="3.3.5.4皮克定理"></a>3.3.5.4皮克定理</h5><p>$$<br>S=n+\frac s2-1<br>$$</p>
+<p>(其中$n$表示多边形内部的点数,$s$表示多边形边界上的点数,$S$表示多边形的面积)</p>
+<h3 id="3-4其他数学工具"><a href="#3-4其他数学工具" class="headerlink" title="3.4其他数学工具"></a>3.4其他数学工具</h3><h4 id="3-4-1快速乘"><a href="#3-4-1快速乘" class="headerlink" title="3.4.1快速乘"></a>3.4.1快速乘</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">mul</span><span class="params">(ll a, ll b)</span> </span>&#123;</span><br><span class="line">  ll x = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (b) &#123;</span><br><span class="line">    <span class="keyword">if</span> (b &amp; <span class="number">1</span>)</span><br><span class="line">      x = (x + a) % p;</span><br><span class="line">    a = (a &lt;&lt; <span class="number">1</span>) % p;</span><br><span class="line">    b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-2快速幂"><a href="#3-4-2快速幂" class="headerlink" title="3.4.2快速幂"></a>3.4.2快速幂</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">pow</span><span class="params">(ll a, ll b, ll p)</span> </span>&#123;</span><br><span class="line">  ll x = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (b) &#123;</span><br><span class="line">    <span class="keyword">if</span> (b &amp; <span class="number">1</span>)</span><br><span class="line">      x = mul(x, a);</span><br><span class="line">    a = mul(a, a);</span><br><span class="line">    b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-4-3更相减损术"><a href="#3-4-3更相减损术" class="headerlink" title="3.4.3更相减损术"></a>3.4.3更相减损术</h4><p>第一步：任意给定两个正整数；判断它们是否都是偶数。若是，则用2约简；若不是则执行第二步。</p>
+<p>第二步：以较大的数减较小的数，接着把所得的差与较小的数比较，并以大数减小数。继续这个操作，直到所得的减数和差相等为止。</p>
+<p>则第一步中约掉的若干个2与第二步中等数的乘积就是所求的最大公约数。</p>
+<h4 id="3-4-4逆元"><a href="#3-4-4逆元" class="headerlink" title="3.4.4逆元"></a>3.4.4逆元</h4><p>根据费马小定理(p是质数)，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inv</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> P)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">pow</span>(x, P<span class="number">-2</span>, P);&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或使用扩展欧几里德:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inv</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> P)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> d, a, b;</span><br><span class="line">  gcd(x, P, d, a, b);</span><br><span class="line">  <span class="keyword">return</span> d == <span class="number">1</span> ? (a+P)%P : <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-5博弈论"><a href="#3-4-5博弈论" class="headerlink" title="3.4.5博弈论"></a>3.4.5博弈论</h4><ul>
+<li>Nim游戏</li>
+<li>SG函数</li>
+</ul>
+<p>定义$$SG(x)=mex(S)$$，其中$S$是$x$的后继状态的$SG$函数集合，$mex(S)$表示<strong>不在</strong>$S$内的最小非负整数。</p>
+<ul>
+<li>SG定理</li>
+</ul>
+<p>组合游戏和的$SG$函数等于各子游戏$SG$函数的$Nim$和。</p>
+<h4 id="3-4-6概率与数学期望"><a href="#3-4-6概率与数学期望" class="headerlink" title="3.4.6概率与数学期望"></a>3.4.6概率与数学期望</h4><ul>
+<li>全概率公式$$P(A)=P(A|B_1)*P(B_1)+P(A|B_2)*P(B_2)+\cdots+P(A|B_n)*P(B_n)$$</li>
+<li>数学期望</li>
+</ul>
+<h4 id="3-4-7快速傅立叶变换"><a href="#3-4-7快速傅立叶变换" class="headerlink" title="3.4.7快速傅立叶变换"></a>3.4.7快速傅立叶变换</h4><h5 id="3-4-7-1基本定义"><a href="#3-4-7-1基本定义" class="headerlink" title="3.4.7.1基本定义"></a>3.4.7.1基本定义</h5><p>快速傅立叶变换(FFT)用于求解多项式的卷积.</p>
+<ul>
+<li>单位根:单位圆的$n$等分点为终点,作$n$个向量,所得的幅角为正且最小的向量对应的复数为$\omega_n$,称为$n$次单位根.<br>$$\omega_n^k=cosk\frac{2\pi}{n}+isin\ k\frac{2\pi}n$$</li>
+<li>单位根的性质:$$\omega_{2n}^{2k}=\omega_n^k$$</li>
+<li>单位根的性质:$$\omega_{n}^{k+\frac nk}=-\omega _n^k$$</li>
+</ul>
+<h5 id="3-4-7-2快速傅立叶变换"><a href="#3-4-7-2快速傅立叶变换" class="headerlink" title="3.4.7.2快速傅立叶变换"></a>3.4.7.2快速傅立叶变换</h5><p>考虑将多项式$A_1(x)=a_0+a_2x^2+a_4x^4+\cdots+a_{n-2}x^{\frac n2 -1}$</p>
+<p>$$A_2(x)=a_1+a_3x+a_5x^2+\cdots+a_{n-1}x^{\frac n2 -1}$$</p>
+<p>则有$$A(x)=A_1(x)+xA_2(x)$$</p>
+<p>有$$A(\omega_n^k)=A_1(\omega_n^{2k})+\omega_n^kA_2(\omega_n^{2k})$$</p>
+<p>有$$A(\omega_n^{k+\frac n2})=A_1{\omega_\frac n2^k-\omega_n^kA_2(\omega_\frac n2 ^ k)}$$.</p>
+<p>注意到,当$k$取遍$[0,\frac n2 -1]$时,$k$和$k+\frac n2$取遍了$[0,n-1]$,也就是说，如果已知$A_1(x)$和$A_2(x)$在$\omega_{n/2}^0,\omega_{n/2}^1,\cdots,\omega_{n/2}^{n/2-1}$处的点值，就可以在$O(n)$的时间内求得$A(x)$在$\omega_n^0,\omega_n^1,\cdots,\omega_n^{n-1}$处的取值。而关于 $A_1(x)$ 和 $A_2(x)$ 的问题都是相对于原问题规模缩小了一半的子问题，分治的边界为一个常数项$a_0$.</p>
+<p>该算法的复杂度为$O(nlogn)$.</p>
+<h5 id="3-4-7-3傅立叶逆变换"><a href="#3-4-7-3傅立叶逆变换" class="headerlink" title="3.4.7.3傅立叶逆变换"></a>3.4.7.3傅立叶逆变换</h5><p>设$(y_0,y_1,\cdots,y_{n-1})$为$(a_0,\cdots,a_{n-1})$的快速傅立叶变换. 考虑另一个向量$(c_0,\cdots,c_{n-1})$满足</p>
+<p>$$c_k=\sum_{i=0}^{n-1}y_i(\omega_n^{-k})^i$$.</p>
+<p>即多项式$B(x)=y_0+y_1x+\cdots+y_{n-1}x^{n-1}$在$\omega_n^0,\cdots,\omega_n^{-(n-1)}$处的点值表示.</p>
+<p>可以得到(证明略)</p>
+<p>$$a_i=\frac 1n c_i$$.</p>
+<p>所以，使用单位根的倒数代替单位根，做一次类似快速傅里叶变换的过程，再将结果每个数除以$n$，即为傅里叶逆变换的结果。</p>
+<h5 id="3-7-4-4代码实现"><a href="#3-7-4-4代码实现" class="headerlink" title="3.7.4.4代码实现"></a>3.7.4.4代码实现</h5><p>FFT有两种常见的代码实现: 递归版本和迭代版本,一般来讲递归效率很差,但由于我非常菜,一轮省选就先使用递归版本骗分.迭代版本以后会更新.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> PI = <span class="built_in">acos</span>(<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">bool</span> inversed = <span class="literal">false</span>;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; <span class="title">omega</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> n, <span class="keyword">const</span> <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!inversed)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt;(<span class="built_in">cos</span>(<span class="number">2</span> * PI / n * k), <span class="built_in">sin</span>(<span class="number">2</span> * PI / n * k));</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">std</span>::conj(</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt;(<span class="built_in">cos</span>(<span class="number">2</span> * PI / n * k), <span class="built_in">sin</span>(<span class="number">2</span> * PI / n * k)));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fft</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; *a, <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; *ans, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">    ans[<span class="number">0</span>] = a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; buf[maxn];</span><br><span class="line">  <span class="keyword">int</span> m = n &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">    buf[i] = a[i * <span class="number">2</span>];</span><br><span class="line">    buf[i + m] = a[i * <span class="number">2</span> + <span class="number">1</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; tmp[maxn];</span><br><span class="line">  fft(buf, tmp, m);</span><br><span class="line">  fft(buf + m, tmp + m, m);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; x = omega(n, i);</span><br><span class="line">    ans[i] = tmp[i] + x * tmp[i + m];</span><br><span class="line">    ans[i + m] = tmp[i] - x * tmp[i + m];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">//sth</span></span><br><span class="line">  <span class="keyword">while</span> (N &lt; n + <span class="number">1</span>)</span><br><span class="line">    N &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">  N &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">  fft(a, ans1, N);</span><br><span class="line">  fft(b, ans2, N);</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; ans3[maxn];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">    ans3[i] = ans1[i] * ans2[i];</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">complex</span>&lt;<span class="keyword">double</span>&gt; tmp[maxn];</span><br><span class="line">  inversed = <span class="literal">true</span>;</span><br><span class="line">  fft(ans3, tmp, N);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">    c[i] = tmp[i].real() / N;</span><br><span class="line">  <span class="comment">//sth</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>$\mathtt{COPYRIGHT}© \mathtt{2017,KONJAC,MIT\ LICENSE} $</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MATHEMATICS"><span class="nav-number">1.</span> <span class="nav-text">MATHEMATICS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">3.数学知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%E6%95%B0%E8%AE%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.1数论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%B7%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">3.1.1扩展欧几里德算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2%E7%BA%BF%E6%80%A7%E7%AD%9B%E4%B8%8E%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">3.1.2线性筛与积性函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-1%E7%BA%BF%E6%80%A7%E7%AD%9B%E7%B4%A0%E6%95%B0"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">3.1.2.1线性筛素数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-2%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">3.1.2.2积性函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-3%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0-varphi"><span class="nav-number">1.1.1.2.3.</span> <span class="nav-text">3.1.2.3欧拉函数$\varphi$</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-4%E7%BA%BF%E6%80%A7%E7%AD%9B%E6%B3%95%E6%B1%82%E8%A7%A3%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.2.4.</span> <span class="nav-text">3.1.2.4线性筛法求解积性函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-5%E7%BA%BF%E6%80%A7%E7%AD%9B%E9%80%86%E5%85%83"><span class="nav-number">1.1.1.2.5.</span> <span class="nav-text">3.1.2.5线性筛逆元</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3%E9%BB%98%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E4%B8%8E%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">3.1.3默比乌斯反演与狄利克雷卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-3-1%E5%88%9D%E7%AD%89%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0-mu"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">3.1.3.1初等积性函数$\mu$</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-3-2%E9%BB%98%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">3.1.3.2默比乌斯反演</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-3-3%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.1.1.3.3.</span> <span class="nav-text">3.1.3.3狄利克雷卷积</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0%E6%B1%82%E5%92%8C%E4%B8%8E%E6%9D%9C%E6%95%99%E7%AD%9B"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">3.1.4积性函数求和与杜教筛</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-1%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.1.4.1.</span> <span class="nav-text">3.1.4.1概述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-1%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E6%B1%82%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">1.1.1.4.2.</span> <span class="nav-text">3.1.4.1欧拉函数求前缀和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-2%E9%BB%98%E6%AF%94%E4%B9%8C%E6%96%AF%E5%87%BD%E6%95%B0%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">1.1.1.4.3.</span> <span class="nav-text">3.1.4.2默比乌斯函数前缀和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-3%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.1.1.4.4.</span> <span class="nav-text">3.1.4.3模板</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-5%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">3.1.5中国剩余定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-6%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">3.1.6高斯消元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-7%E5%A4%A7%E6%AD%A5%E5%B0%8F%E6%AD%A5BSGS%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">3.1.7大步小步BSGS算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.2组合数学</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%E4%B8%8E%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">3.2.1组合计数与二项式定理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-1%E4%BA%8C%E9%A1%B9%E5%BC%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">3.2.1.1二项式定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-2%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">3.2.1.2排列组合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2%E5%B8%B8%E8%A7%81%E6%95%B0%E5%88%97"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">3.2.2常见数列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3%E7%BD%AE%E6%8D%A2%E7%BE%A4%E4%B8%8E-Polya-%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3.2.3置换群与$Polya$定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">3.2.4容斥原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%E5%B8%B8%E8%A7%81%E7%BB%93%E8%AE%BA%E4%B8%8E%E6%8A%80%E5%B7%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.3常见结论与技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">3.3.1裴蜀定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2%E5%BA%95%E5%92%8C%E9%A1%B6"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">3.3.2底和顶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3%E5%92%8C%E5%BC%8F"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">3.3.3和式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-1%E4%B8%89%E5%A4%A7%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.1.3.3.1.</span> <span class="nav-text">3.3.3.1三大定律</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-2%E6%B1%82%E8%A7%A3%E6%8A%80%E5%B7%A7"><span class="nav-number">1.1.3.3.2.</span> <span class="nav-text">3.3.3.2求解技巧</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-3%E5%A4%9A%E9%87%8D%E5%92%8C%E5%BC%8F"><span class="nav-number">1.1.3.3.3.</span> <span class="nav-text">3.3.3.3多重和式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-5%E4%B8%80%E4%BA%9B%E5%8F%AF%E8%83%BD%E4%BC%9A%E7%94%A8%E5%88%B0%E7%9A%84%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">3.3.5一些可能会用到的定理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-1%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.4.1.</span> <span class="nav-text">3.3.5.1费马小定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-2%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.4.2.</span> <span class="nav-text">3.3.5.2欧拉定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-3%E5%A8%81%E5%B0%94%E9%80%8A%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.4.3.</span> <span class="nav-text">3.3.5.3威尔逊定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-4%E7%9A%AE%E5%85%8B%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.3.4.4.</span> <span class="nav-text">3.3.5.4皮克定理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4%E5%85%B6%E4%BB%96%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.4其他数学工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1%E5%BF%AB%E9%80%9F%E4%B9%98"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">3.4.1快速乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2%E5%BF%AB%E9%80%9F%E5%B9%82"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">3.4.2快速幂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3%E6%9B%B4%E7%9B%B8%E5%87%8F%E6%8D%9F%E6%9C%AF"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">3.4.3更相减损术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-4%E9%80%86%E5%85%83"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">3.4.4逆元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-5%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">3.4.5博弈论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-6%E6%A6%82%E7%8E%87%E4%B8%8E%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">3.4.6概率与数学期望</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-7%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-number">1.1.4.7.</span> <span class="nav-text">3.4.7快速傅立叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-7-1%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.4.7.1.</span> <span class="nav-text">3.4.7.1基本定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-7-2%E5%BF%AB%E9%80%9F%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-number">1.1.4.7.2.</span> <span class="nav-text">3.4.7.2快速傅立叶变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-7-3%E5%82%85%E7%AB%8B%E5%8F%B6%E9%80%86%E5%8F%98%E6%8D%A2"><span class="nav-number">1.1.4.7.3.</span> <span class="nav-text">3.4.7.3傅立叶逆变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-7-4-4%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.4.7.4.</span> <span class="nav-text">3.7.4.4代码实现</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Geng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+      
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width:100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2-SAT/" rel="tag">2-SAT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">AC自动机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSGS/" rel="tag">BSGS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDQ%E5%88%86%E6%B2%BB/" rel="tag">CDQ分治</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFT/" rel="tag">FFT</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manacher/" rel="tag">Manacher</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NTT/" rel="tag">NTT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Polya%E5%AE%9A%E7%90%86/" rel="tag">Polya定理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Prufer%E7%BC%96%E7%A0%81/" rel="tag">Prufer编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/" rel="tag">STL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Trie/" rel="tag">Trie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs%E5%BA%8F%E5%88%97/" rel="tag">dfs序列</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lca/" rel="tag">lca</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lct/" rel="tag">lct</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/splay/" rel="tag">splay</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E4%B8%8B%E7%95%8C%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">上下界网络流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%B8%AD%E6%A0%91/" rel="tag">主席树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%B1%E6%90%9E/" rel="tag">乱搞</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%86/" rel="tag">二分</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" rel="tag">二分图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E4%BB%B7%E6%8F%90%E5%89%8D%E8%AE%A1%E7%AE%97/" rel="tag">代价提前计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%80%8D%E5%A2%9E/" rel="tag">倍增</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%B8%E5%8C%85/" rel="tag">凸包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%9D%97/" rel="tag">分块</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B1%82%E5%9B%BE/" rel="tag">分层图</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%95%B0%E8%A7%84%E5%88%92/" rel="tag">分数规划</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag">动态点分治</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">单调栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" rel="tag">单调队列</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/" rel="tag">博弈论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E6%A0%B9/" rel="tag">原根</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" rel="tag">后缀数组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" rel="tag">多项式</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A5%BD%E9%A2%98/" rel="tag">好题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E5%85%B8%E5%BA%8F/" rel="tag">字典序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" rel="tag">字符串哈希</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag">容斥原理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B3%E9%9D%A2%E5%9B%BE/" rel="tag">平面图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="tag">并查集</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%BF%E4%B9%89%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">广义后缀自动机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/" rel="tag">强连通分量</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%86%E7%82%B9/" rel="tag">拆点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97/" rel="tag">括号序列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%91%B8%E9%B1%BC/" rel="tag">摸鱼</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E4%BD%8DDP/" rel="tag">数位DP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86/" rel="tag">数学知识</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">37</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag">数论</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/" rel="tag">斜率优化</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/" rel="tag">最小割</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">权值线段树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%8E%E8%B6%85%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">李超线段树</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%9A%E4%B8%BE/" rel="tag">枚举</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E4%B8%8A%E5%80%8D%E5%A2%9E/" rel="tag">树上倍增</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%A5%97%E6%A0%91/" rel="tag">树套树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%BD%A2DP/" rel="tag">树形DP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E5%BD%A2dp/" rel="tag">树形dp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86/" rel="tag">树链剖分</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A8%A1%E5%9E%8B%E8%BD%AC%E5%8C%96/" rel="tag">模型转化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A8%A1%E6%9D%BF/" rel="tag">模板</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" rel="tag">欧拉函数</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag">点分治</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%B9%E6%AE%8A%E6%95%B0%E5%88%97/" rel="tag">特殊数列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8A%B6%E5%8E%8BDP/" rel="tag">状压DP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag">生成函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">生成树</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%88%90%E6%A0%91%E8%AE%A1%E6%95%B0/" rel="tag">生成树计数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95/" rel="tag">矩阵乘法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A9%E9%98%B5%E6%A0%91%E5%AE%9A%E7%90%86/" rel="tag">矩阵树定理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/" rel="tag">离散对数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A6%BB%E7%BA%BF%E5%A4%84%E7%90%86/" rel="tag">离线处理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" rel="tag">线性规划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">线段树</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" rel="tag">组合数学</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%93%E8%AE%BA%E9%A2%98/" rel="tag">结论题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8E%AB%E9%98%9F%E7%AE%97%E6%B3%95/" rel="tag">莫队算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%92%9F%E8%92%BB/" rel="tag">蒟蒻</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%9F%E7%8E%AF/" rel="tag">负环</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%B9%E7%94%A8%E6%B5%81/" rel="tag">费用流</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%80%E6%B5%81/" rel="tag">退流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83/" rel="tag">高斯消元</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%B2%BE%E5%BA%A6/" rel="tag">高精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%BB%98%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" rel="tag">默比乌斯反演</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Geng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
