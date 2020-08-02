@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mrmorning.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="为了测试stl30分的暴力写法。。。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 11;int n;char plus1[m">
+  <meta name="description" content="为了测试stl30分的暴力写法。。。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 11;int n;char plus1[maxn], plus">
 <meta property="og:type" content="article">
 <meta property="og:title" content="P1092 虫食算 NOIP2002">
 <meta property="og:url" content="mrmorning.github.io/2016/10/29/P1092-%E8%99%AB%E9%A3%9F%E7%AE%97-NOIP2002/index.html">
 <meta property="og:site_name" content="Chen Geng&#39;s Blog">
-<meta property="og:description" content="为了测试stl30分的暴力写法。。。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 11;int n;char plus1[m">
+<meta property="og:description" content="为了测试stl30分的暴力写法。。。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 11;int n;char plus1[maxn], plus">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-10-29T15:40:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -195,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -210,7 +327,7 @@
 
       
         <p>为了测试stl<br>30分的暴力写法。。。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 11;</span><br><span class="line">int n;</span><br><span class="line">char plus1[maxn], plus2[maxn], answer[maxn];</span><br><span class="line">int ans[maxn];</span><br><span class="line">&#x2F;&#x2F;---------------</span><br><span class="line">bool ok() &#123;</span><br><span class="line">    int tmp[maxn];</span><br><span class="line">    for (int i &#x3D; n-1; i &gt;&#x3D; 0; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp[i] &#x3D; ans[plus1[i] - &#39;A&#39;]+ ans[plus2[i] - &#39;A&#39;];</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i &#x3D; n-1; i &gt;&#x3D; 0; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        if(tmp[i] &gt;&#x3D; n) &#123;</span><br><span class="line">            tmp[i - 1] +&#x3D; tmp[i] &#x2F; n;</span><br><span class="line">            tmp[i] %&#x3D; n;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if(tmp[i] !&#x3D; ans[answer[i]-&#39;A&#39;]) return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;---------------</span><br><span class="line">int main() &#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    for(int i &#x3D; 0; i &lt; n; i++) cin &gt;&gt; plus1[i];</span><br><span class="line">    for(int i &#x3D; 0; i &lt; n; i++) cin &gt;&gt; plus2[i];</span><br><span class="line">    for(int i &#x3D; 0; i &lt; n; i++) cin &gt;&gt; answer[i];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ans[i] &#x3D; i;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(ans, ans+n);</span><br><span class="line">    do&#123;</span><br><span class="line">        if(ok()) break;    </span><br><span class="line">    &#125; while(next_permutation(ans, ans+n));</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; ans[i] &lt;&lt; &#39; &#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn = 11;</span><br><span class="line">int n;</span><br><span class="line">char plus1[maxn], plus2[maxn], answer[maxn];</span><br><span class="line">int ans[maxn];</span><br><span class="line">//---------------</span><br><span class="line">bool ok() {</span><br><span class="line">    int tmp[maxn];</span><br><span class="line">    for (int i = n-1; i &gt;= 0; --i)</span><br><span class="line">    {</span><br><span class="line">        tmp[i] = ans[plus1[i] - 'A']+ ans[plus2[i] - 'A'];</span><br><span class="line">    }</span><br><span class="line">    for (int i = n-1; i &gt;= 0; --i)</span><br><span class="line">    {</span><br><span class="line">        if(tmp[i] &gt;= n) {</span><br><span class="line">            tmp[i - 1] += tmp[i] / n;</span><br><span class="line">            tmp[i] %= n;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    for (int i = 0; i &lt; n; ++i)</span><br><span class="line">    {</span><br><span class="line">        if(tmp[i] != ans[answer[i]-'A']) return false;</span><br><span class="line">    }</span><br><span class="line">    return true;</span><br><span class="line">}</span><br><span class="line">//---------------</span><br><span class="line">int main() {</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    for(int i = 0; i &lt; n; i++) cin &gt;&gt; plus1[i];</span><br><span class="line">    for(int i = 0; i &lt; n; i++) cin &gt;&gt; plus2[i];</span><br><span class="line">    for(int i = 0; i &lt; n; i++) cin &gt;&gt; answer[i];</span><br><span class="line">    for (int i = 0; i &lt; n; ++i)</span><br><span class="line">    {</span><br><span class="line">        ans[i] = i;</span><br><span class="line">    }</span><br><span class="line">    sort(ans, ans+n);</span><br><span class="line">    do{</span><br><span class="line">        if(ok()) break;    </span><br><span class="line">    } while(next_permutation(ans, ans+n));</span><br><span class="line">    for (int i = 0; i &lt; n; ++i)</span><br><span class="line">    {</span><br><span class="line">        cout &lt;&lt; ans[i] &lt;&lt; ' ';</span><br><span class="line">    }</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     

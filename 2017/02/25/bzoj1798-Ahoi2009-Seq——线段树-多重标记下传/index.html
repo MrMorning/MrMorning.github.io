@@ -28,7 +28,7 @@
 <meta property="og:description" content="题意请你写一个数据结构，支持：1. 子序列同加2. 子序列同乘3. 统计子序列和">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-02-25T10:08:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="线段树">
@@ -78,7 +78,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -197,7 +314,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -215,7 +332,7 @@
 <a id="more"></a>
 
 <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>线段树裸题，但对于我这种初学者还是非常难写。<br>我们维护两个标记，一个是在这个节点上作过的所有乘法操作，一个是加法操作，始终保持乘法优先级在前，这就说明，如果原来已经有了加法，那么我们需要把加法让位，即把加法×乘法，然后乘法搞一下原来的值。<br>对于如果一个操作与一个区间不完全覆盖，我们需要把lazy标记下传，对于下传操作，也需要按照上面的方法计算优先级，同时更新节点sum值。<br>注意在加法操作时，不要使用节点的add值更新sum，而要用val，因为add已经计算在sum里面了。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define ll long long</span><br><span class="line">ll n, p;</span><br><span class="line">ll m;</span><br><span class="line">const int maxn &#x3D; 100005;</span><br><span class="line">struct seg &#123;</span><br><span class="line">  int l, r;</span><br><span class="line">  ll sum, add, tag;</span><br><span class="line">&#125; t[4 * maxn];</span><br><span class="line">void build(int k, int l, int r) &#123;</span><br><span class="line">  t[k].l &#x3D; l;</span><br><span class="line">  t[k].r &#x3D; r;</span><br><span class="line">  if (r &#x3D;&#x3D; l) &#123;</span><br><span class="line">    t[k].tag &#x3D; 1;</span><br><span class="line">    t[k].add &#x3D; 0;</span><br><span class="line">    scanf(&quot;%lld&quot;, &amp;t[k].sum);</span><br><span class="line">    t[k].sum %&#x3D; p;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  int mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  build(k &lt;&lt; 1, l, mid);</span><br><span class="line">  build(k &lt;&lt; 1 | 1, mid + 1, r);</span><br><span class="line">  t[k].sum &#x3D; (t[k &lt;&lt; 1].sum + t[k &lt;&lt; 1 | 1].sum) % p;</span><br><span class="line">  t[k].add &#x3D; 0;</span><br><span class="line">  t[k].tag &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line">void pushdown(int k) &#123;</span><br><span class="line">  if (t[k].add &#x3D;&#x3D; 0 &amp;&amp; t[k].tag &#x3D;&#x3D; 1)</span><br><span class="line">    return;</span><br><span class="line">  ll ad &#x3D; t[k].add, tag &#x3D; t[k].tag;</span><br><span class="line">  ad %&#x3D; p, tag %&#x3D; p;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r, mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  t[k &lt;&lt; 1].tag &#x3D; (t[k &lt;&lt; 1].tag * tag) % p;</span><br><span class="line">  t[k &lt;&lt; 1].add &#x3D; ((t[k &lt;&lt; 1].add * tag) % p + ad) % p;</span><br><span class="line">  t[k &lt;&lt; 1].sum &#x3D; (((t[k &lt;&lt; 1].sum * tag) % p + (ad * (mid - l + 1) % p)%p)%p) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].tag &#x3D; (t[k &lt;&lt; 1 | 1].tag * tag) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].add &#x3D; ((t[k &lt;&lt; 1 | 1].add * tag) % p + ad) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].sum &#x3D; (((t[k &lt;&lt; 1|1].sum * tag) % p + (ad * (r-mid) % p)%p)%p) % p;</span><br><span class="line">  t[k].add &#x3D; 0;</span><br><span class="line">  t[k].tag &#x3D; 1;</span><br><span class="line">  return;</span><br><span class="line">&#125;</span><br><span class="line">void update(int k) &#123; t[k].sum &#x3D; (t[k &lt;&lt; 1].sum%p + t[k &lt;&lt; 1 | 1].sum%p) % p; &#125;</span><br><span class="line">void add(int k, int x, int y, ll val) &#123;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r, mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;&#x3D; l &amp;&amp; r &lt;&#x3D; y) &#123;</span><br><span class="line">    t[k].add &#x3D; (t[k].add + val) % p;</span><br><span class="line">    t[k].sum &#x3D; (t[k].sum + (val * (r - l + 1) % p) % p) % p;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  pushdown(k);</span><br><span class="line">  if (x &lt;&#x3D; mid)</span><br><span class="line">    add(k &lt;&lt; 1, x, y, val);</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    add(k &lt;&lt; 1 | 1, x, y, val);</span><br><span class="line">  update(k);</span><br><span class="line">&#125;</span><br><span class="line">void mul(int k, int x, int y, ll val) &#123;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r, mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;&#x3D; l &amp;&amp; r &lt;&#x3D; y) &#123;</span><br><span class="line">    t[k].add &#x3D; (t[k].add * val) % p;</span><br><span class="line">    t[k].tag &#x3D; (t[k].tag * val) % p;</span><br><span class="line">    t[k].sum &#x3D; (t[k].sum * val) % p;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  pushdown(k);</span><br><span class="line">  if (x &lt;&#x3D; mid)</span><br><span class="line">    mul(k &lt;&lt; 1, x, y, val);</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    mul(k &lt;&lt; 1 | 1, x, y, val);</span><br><span class="line">  update(k);</span><br><span class="line">&#125;</span><br><span class="line">ll query(int k, int x, int y) &#123;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r, mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;&#x3D; l &amp;&amp; r &lt;&#x3D; y) &#123;</span><br><span class="line">    return t[k].sum%p;</span><br><span class="line">  &#125;</span><br><span class="line">  pushdown(k);</span><br><span class="line">  ll ans &#x3D; 0;</span><br><span class="line">  if (x &lt;&#x3D; mid)</span><br><span class="line">    ans &#x3D; (ans + query(k &lt;&lt; 1, x, y)) % p;</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    ans &#x3D; (ans + query(k &lt;&lt; 1 | 1, x, y)) % p;</span><br><span class="line">  update(k);</span><br><span class="line">  return ans%p;</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">  &#x2F;&#x2F; freopen(&quot;seq.in&quot;, &quot;r&quot;, stdin);</span><br><span class="line">  &#x2F;&#x2F; freopen(&quot;seq.ans&quot;, &quot;w&quot;, stdout);</span><br><span class="line">  scanf(&quot;%lld %lld&quot;, &amp;n, &amp;p);</span><br><span class="line">  build(1, 1, n);</span><br><span class="line">  scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">  while (m--) &#123;</span><br><span class="line">    int q;</span><br><span class="line">    scanf(&quot;%d&quot;, &amp;q);</span><br><span class="line">    if (q &#x3D;&#x3D; 1) &#123;</span><br><span class="line">      int x, y;</span><br><span class="line">      ll z;</span><br><span class="line">      scanf(&quot;%d%d%lld&quot;, &amp;x, &amp;y, &amp;z);</span><br><span class="line">      z%&#x3D;p;</span><br><span class="line">      mul(1, x, y, z);</span><br><span class="line">    &#125; else if (q &#x3D;&#x3D; 2) &#123;</span><br><span class="line">      int x, y;</span><br><span class="line">      ll z;</span><br><span class="line">      scanf(&quot;%d%d%lld&quot;, &amp;x, &amp;y, &amp;z);</span><br><span class="line">      z%&#x3D;p;</span><br><span class="line">      add(1, x, y, z);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      int x, y;</span><br><span class="line">      scanf(&quot;%d %d&quot;, &amp;x, &amp;y);</span><br><span class="line">      printf(&quot;%lld\n&quot;, query(1, x, y));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">#define ll long long</span><br><span class="line">ll n, p;</span><br><span class="line">ll m;</span><br><span class="line">const int maxn = 100005;</span><br><span class="line">struct seg {</span><br><span class="line">  int l, r;</span><br><span class="line">  ll sum, add, tag;</span><br><span class="line">} t[4 * maxn];</span><br><span class="line">void build(int k, int l, int r) {</span><br><span class="line">  t[k].l = l;</span><br><span class="line">  t[k].r = r;</span><br><span class="line">  if (r == l) {</span><br><span class="line">    t[k].tag = 1;</span><br><span class="line">    t[k].add = 0;</span><br><span class="line">    scanf("%lld", &amp;t[k].sum);</span><br><span class="line">    t[k].sum %= p;</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  int mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  build(k &lt;&lt; 1, l, mid);</span><br><span class="line">  build(k &lt;&lt; 1 | 1, mid + 1, r);</span><br><span class="line">  t[k].sum = (t[k &lt;&lt; 1].sum + t[k &lt;&lt; 1 | 1].sum) % p;</span><br><span class="line">  t[k].add = 0;</span><br><span class="line">  t[k].tag = 1;</span><br><span class="line">}</span><br><span class="line">void pushdown(int k) {</span><br><span class="line">  if (t[k].add == 0 &amp;&amp; t[k].tag == 1)</span><br><span class="line">    return;</span><br><span class="line">  ll ad = t[k].add, tag = t[k].tag;</span><br><span class="line">  ad %= p, tag %= p;</span><br><span class="line">  int l = t[k].l, r = t[k].r, mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  t[k &lt;&lt; 1].tag = (t[k &lt;&lt; 1].tag * tag) % p;</span><br><span class="line">  t[k &lt;&lt; 1].add = ((t[k &lt;&lt; 1].add * tag) % p + ad) % p;</span><br><span class="line">  t[k &lt;&lt; 1].sum = (((t[k &lt;&lt; 1].sum * tag) % p + (ad * (mid - l + 1) % p)%p)%p) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].tag = (t[k &lt;&lt; 1 | 1].tag * tag) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].add = ((t[k &lt;&lt; 1 | 1].add * tag) % p + ad) % p;</span><br><span class="line">  t[k &lt;&lt; 1 | 1].sum = (((t[k &lt;&lt; 1|1].sum * tag) % p + (ad * (r-mid) % p)%p)%p) % p;</span><br><span class="line">  t[k].add = 0;</span><br><span class="line">  t[k].tag = 1;</span><br><span class="line">  return;</span><br><span class="line">}</span><br><span class="line">void update(int k) { t[k].sum = (t[k &lt;&lt; 1].sum%p + t[k &lt;&lt; 1 | 1].sum%p) % p; }</span><br><span class="line">void add(int k, int x, int y, ll val) {</span><br><span class="line">  int l = t[k].l, r = t[k].r, mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;= l &amp;&amp; r &lt;= y) {</span><br><span class="line">    t[k].add = (t[k].add + val) % p;</span><br><span class="line">    t[k].sum = (t[k].sum + (val * (r - l + 1) % p) % p) % p;</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  pushdown(k);</span><br><span class="line">  if (x &lt;= mid)</span><br><span class="line">    add(k &lt;&lt; 1, x, y, val);</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    add(k &lt;&lt; 1 | 1, x, y, val);</span><br><span class="line">  update(k);</span><br><span class="line">}</span><br><span class="line">void mul(int k, int x, int y, ll val) {</span><br><span class="line">  int l = t[k].l, r = t[k].r, mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;= l &amp;&amp; r &lt;= y) {</span><br><span class="line">    t[k].add = (t[k].add * val) % p;</span><br><span class="line">    t[k].tag = (t[k].tag * val) % p;</span><br><span class="line">    t[k].sum = (t[k].sum * val) % p;</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  pushdown(k);</span><br><span class="line">  if (x &lt;= mid)</span><br><span class="line">    mul(k &lt;&lt; 1, x, y, val);</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    mul(k &lt;&lt; 1 | 1, x, y, val);</span><br><span class="line">  update(k);</span><br><span class="line">}</span><br><span class="line">ll query(int k, int x, int y) {</span><br><span class="line">  int l = t[k].l, r = t[k].r, mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  if (x &lt;= l &amp;&amp; r &lt;= y) {</span><br><span class="line">    return t[k].sum%p;</span><br><span class="line">  }</span><br><span class="line">  pushdown(k);</span><br><span class="line">  ll ans = 0;</span><br><span class="line">  if (x &lt;= mid)</span><br><span class="line">    ans = (ans + query(k &lt;&lt; 1, x, y)) % p;</span><br><span class="line">  if (y &gt; mid)</span><br><span class="line">    ans = (ans + query(k &lt;&lt; 1 | 1, x, y)) % p;</span><br><span class="line">  update(k);</span><br><span class="line">  return ans%p;</span><br><span class="line">}</span><br><span class="line">int main() {</span><br><span class="line">  // freopen("seq.in", "r", stdin);</span><br><span class="line">  // freopen("seq.ans", "w", stdout);</span><br><span class="line">  scanf("%lld %lld", &amp;n, &amp;p);</span><br><span class="line">  build(1, 1, n);</span><br><span class="line">  scanf("%d", &amp;m);</span><br><span class="line">  while (m--) {</span><br><span class="line">    int q;</span><br><span class="line">    scanf("%d", &amp;q);</span><br><span class="line">    if (q == 1) {</span><br><span class="line">      int x, y;</span><br><span class="line">      ll z;</span><br><span class="line">      scanf("%d%d%lld", &amp;x, &amp;y, &amp;z);</span><br><span class="line">      z%=p;</span><br><span class="line">      mul(1, x, y, z);</span><br><span class="line">    } else if (q == 2) {</span><br><span class="line">      int x, y;</span><br><span class="line">      ll z;</span><br><span class="line">      scanf("%d%d%lld", &amp;x, &amp;y, &amp;z);</span><br><span class="line">      z%=p;</span><br><span class="line">      add(1, x, y, z);</span><br><span class="line">    } else {</span><br><span class="line">      int x, y;</span><br><span class="line">      scanf("%d %d", &amp;x, &amp;y);</span><br><span class="line">      printf("%lld\n", query(1, x, y));</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     

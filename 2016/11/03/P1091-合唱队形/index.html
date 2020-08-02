@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mrmorning.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="水题 12345678910111213141516171819202122232425262728293031323334#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 105;int main(int argc, char const *argv[])&amp;#123;    int n;">
+  <meta name="description" content="水题 12345678910111213141516171819202122232425262728293031323334#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 105;int main(int argc, char const *argv[]){    int n;    cin &gt;&gt; n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="P1091 合唱队形">
 <meta property="og:url" content="mrmorning.github.io/2016/11/03/P1091-%E5%90%88%E5%94%B1%E9%98%9F%E5%BD%A2/index.html">
 <meta property="og:site_name" content="Chen Geng&#39;s Blog">
-<meta property="og:description" content="水题 12345678910111213141516171819202122232425262728293031323334#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 105;int main(int argc, char const *argv[])&amp;#123;    int n;">
+<meta property="og:description" content="水题 12345678910111213141516171819202122232425262728293031323334#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;const int maxn &#x3D; 105;int main(int argc, char const *argv[]){    int n;    cin &gt;&gt; n">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-11-03T10:25:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -195,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -210,7 +327,7 @@
 
       
         <p>水题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 105;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    int high[maxn];</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; n; i++) cin &gt;&gt; high[i];</span><br><span class="line">    int f[maxn] &#x3D; &#123;0&#125;;</span><br><span class="line">    int g[maxn] &#x3D; &#123;0&#125;;</span><br><span class="line">    int anss &#x3D; maxn;</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">        int ans;</span><br><span class="line">        f[1] &#x3D; 1; g[n] &#x3D; 1;</span><br><span class="line">        for(int j &#x3D; 2; j &lt;&#x3D; i; j++) &#123;ans &#x3D; 0;</span><br><span class="line">            for(int k &#x3D; 1; k &lt; j; k++) &#123;</span><br><span class="line">                if(high[k] &lt; high[j]) ans &#x3D; max(ans, f[k]);</span><br><span class="line">            &#125;</span><br><span class="line">            f[j] &#x3D; ans + 1;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int j &#x3D; n-1; j &gt;&#x3D; i; j--) &#123;</span><br><span class="line">            ans &#x3D; 0;</span><br><span class="line">            for(int k &#x3D; n; k &gt; j; k--) &#123;</span><br><span class="line">                if(high[k] &lt; high[j]) ans &#x3D; max(ans, g[k]);</span><br><span class="line">            &#125;</span><br><span class="line">            g[j] &#x3D; ans + 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int a &#x3D; f[i], b &#x3D; g[i]; </span><br><span class="line">        anss &#x3D; min(anss, n-a-b+1);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; anss;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn = 105;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">{</span><br><span class="line">    int n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    int high[maxn];</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) cin &gt;&gt; high[i];</span><br><span class="line">    int f[maxn] = {0};</span><br><span class="line">    int g[maxn] = {0};</span><br><span class="line">    int anss = maxn;</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) {</span><br><span class="line">        int ans;</span><br><span class="line">        f[1] = 1; g[n] = 1;</span><br><span class="line">        for(int j = 2; j &lt;= i; j++) {ans = 0;</span><br><span class="line">            for(int k = 1; k &lt; j; k++) {</span><br><span class="line">                if(high[k] &lt; high[j]) ans = max(ans, f[k]);</span><br><span class="line">            }</span><br><span class="line">            f[j] = ans + 1;</span><br><span class="line">        }</span><br><span class="line">        for(int j = n-1; j &gt;= i; j--) {</span><br><span class="line">            ans = 0;</span><br><span class="line">            for(int k = n; k &gt; j; k--) {</span><br><span class="line">                if(high[k] &lt; high[j]) ans = max(ans, g[k]);</span><br><span class="line">            }</span><br><span class="line">            g[j] = ans + 1;</span><br><span class="line">        }</span><br><span class="line">        int a = f[i], b = g[i]; </span><br><span class="line">        anss = min(anss, n-a-b+1);</span><br><span class="line">    }</span><br><span class="line">    cout &lt;&lt; anss;</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     

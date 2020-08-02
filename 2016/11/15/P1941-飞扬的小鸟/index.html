@@ -28,7 +28,7 @@
 <meta property="og:description" content="此题很容易写出方程，由以前的知识可以迁移得，本题可以用完全背包的方法进行优化，使用滚动数组即可得到答案。&#x2F;&#x2F;莫名奇妙60分。不知道什么细节出了错。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-11-15T11:06:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -195,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -210,7 +327,7 @@
 
       
         <p>此题很容易写出方程，由以前的知识可以迁移得，本题可以用完全背包的方法进行优化，使用滚动数组即可得到答案。<br>//莫名奇妙60分。不知道什么细节出了错。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 10005;</span><br><span class="line">int main() &#123;</span><br><span class="line">&#x2F;&#x2F;    freopen(&quot;input.in&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    int n, m, k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">    int up[maxn], down[maxn], low[maxn], high[maxn];</span><br><span class="line">    for(int i &#x3D; 0; i &lt; n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; up[i] &gt;&gt; down[i];</span><br><span class="line">        low[i] &#x3D; 1;</span><br><span class="line">        high[i] &#x3D; m;</span><br><span class="line">    &#125;</span><br><span class="line">    low[n] &#x3D; 1; high[n] &#x3D; m;</span><br><span class="line">    int pip[maxn];</span><br><span class="line">    memset(pip, 0, sizeof(pip));</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; k; i++) &#123;</span><br><span class="line">        int x, y, z;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;</span><br><span class="line">        low[x] &#x3D; y+1;</span><br><span class="line">        high[x] &#x3D; z-1;</span><br><span class="line">        pip[x] &#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i &#x3D; 0; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">        if(low[i] &#x3D;&#x3D; 1 &amp;&amp; high[i] &#x3D;&#x3D; m) </span><br><span class="line">            high[i] &#x3D; max(high[i], high[i-1] + up[i-1]);</span><br><span class="line">    &#125;</span><br><span class="line">    int f[2][maxn];</span><br><span class="line">    memset(f, 127, sizeof(f));</span><br><span class="line">    int pre &#x3D; 0, now &#x3D; 1;</span><br><span class="line">    for(int i &#x3D; 0; i &lt;&#x3D; m; i++) f[now][i] &#x3D; 0;</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">        swap(now, pre);</span><br><span class="line">        memset(f[now], 127, sizeof(f[now]));</span><br><span class="line">        for(int j &#x3D; low[i]; j &lt;&#x3D; high[i]; j++) &#123;</span><br><span class="line">            if(j+down[i-1] &lt;&#x3D; m)f[now][j] &#x3D; f[pre][j+down[i-1]];</span><br><span class="line">            if(j-up[i-1]&gt;&#x3D;0) f[now][j] &#x3D; min(f[now][j], min(f[pre][j-up[i-1]],f[now][j-up[i-1]])+1);</span><br><span class="line">        &#125;</span><br><span class="line">        int s &#x3D; 2139062143;</span><br><span class="line">        for(int j &#x3D; m; j &lt;&#x3D; high[i]; j++) &#123;</span><br><span class="line">            s &#x3D; min(s, f[now][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        f[now][m] &#x3D; s;</span><br><span class="line">        if(pip[i]) &#123;</span><br><span class="line">            bool ok &#x3D; false;</span><br><span class="line">            for(int j &#x3D; low[i]; j &lt;&#x3D; high[i]; j++) &#123;</span><br><span class="line">                if(f[now][j] !&#x3D; 2139062143) &#123;</span><br><span class="line">                    ok &#x3D; true;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if(ok) pip[i] &#x3D; 2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int ans &#x3D; 0x3f3f3f;</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;</span><br><span class="line">        ans &#x3D; min(ans, f[now][i]);</span><br><span class="line">    &#125;</span><br><span class="line">    if(ans !&#x3D; 0x3f3f3f) &#123;</span><br><span class="line">        cout &lt;&lt; 1 &lt;&lt; endl &lt;&lt; ans;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;    </span><br><span class="line">        cout &lt;&lt; 0 &lt;&lt; endl;</span><br><span class="line">        int sum &#x3D; 0;</span><br><span class="line">        for(int i &#x3D; 0; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">            if(pip[i] &#x3D;&#x3D; 2) sum++;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn = 10005;</span><br><span class="line">int main() {</span><br><span class="line">//    freopen("input.in", "r", stdin);</span><br><span class="line">    int n, m, k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">    int up[maxn], down[maxn], low[maxn], high[maxn];</span><br><span class="line">    for(int i = 0; i &lt; n; i++) {</span><br><span class="line">        cin &gt;&gt; up[i] &gt;&gt; down[i];</span><br><span class="line">        low[i] = 1;</span><br><span class="line">        high[i] = m;</span><br><span class="line">    }</span><br><span class="line">    low[n] = 1; high[n] = m;</span><br><span class="line">    int pip[maxn];</span><br><span class="line">    memset(pip, 0, sizeof(pip));</span><br><span class="line">    for(int i = 1; i &lt;= k; i++) {</span><br><span class="line">        int x, y, z;</span><br><span class="line">        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;</span><br><span class="line">        low[x] = y+1;</span><br><span class="line">        high[x] = z-1;</span><br><span class="line">        pip[x] = 1;</span><br><span class="line">    }</span><br><span class="line">    for(int i = 0; i &lt;= n; i++) {</span><br><span class="line">        if(low[i] == 1 &amp;&amp; high[i] == m) </span><br><span class="line">            high[i] = max(high[i], high[i-1] + up[i-1]);</span><br><span class="line">    }</span><br><span class="line">    int f[2][maxn];</span><br><span class="line">    memset(f, 127, sizeof(f));</span><br><span class="line">    int pre = 0, now = 1;</span><br><span class="line">    for(int i = 0; i &lt;= m; i++) f[now][i] = 0;</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) {</span><br><span class="line">        swap(now, pre);</span><br><span class="line">        memset(f[now], 127, sizeof(f[now]));</span><br><span class="line">        for(int j = low[i]; j &lt;= high[i]; j++) {</span><br><span class="line">            if(j+down[i-1] &lt;= m)f[now][j] = f[pre][j+down[i-1]];</span><br><span class="line">            if(j-up[i-1]&gt;=0) f[now][j] = min(f[now][j], min(f[pre][j-up[i-1]],f[now][j-up[i-1]])+1);</span><br><span class="line">        }</span><br><span class="line">        int s = 2139062143;</span><br><span class="line">        for(int j = m; j &lt;= high[i]; j++) {</span><br><span class="line">            s = min(s, f[now][j]);</span><br><span class="line">        }</span><br><span class="line">        f[now][m] = s;</span><br><span class="line">        if(pip[i]) {</span><br><span class="line">            bool ok = false;</span><br><span class="line">            for(int j = low[i]; j &lt;= high[i]; j++) {</span><br><span class="line">                if(f[now][j] != 2139062143) {</span><br><span class="line">                    ok = true;</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            if(ok) pip[i] = 2;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    int ans = 0x3f3f3f;</span><br><span class="line">    for(int i = 1; i &lt;= m; i++) {</span><br><span class="line">        ans = min(ans, f[now][i]);</span><br><span class="line">    }</span><br><span class="line">    if(ans != 0x3f3f3f) {</span><br><span class="line">        cout &lt;&lt; 1 &lt;&lt; endl &lt;&lt; ans;</span><br><span class="line">    }</span><br><span class="line">    else {    </span><br><span class="line">        cout &lt;&lt; 0 &lt;&lt; endl;</span><br><span class="line">        int sum = 0;</span><br><span class="line">        for(int i = 0; i &lt;= n; i++) {</span><br><span class="line">            if(pip[i] == 2) sum++;</span><br><span class="line">        }</span><br><span class="line">        cout &lt;&lt; sum;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     

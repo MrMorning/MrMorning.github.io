@@ -28,7 +28,7 @@
 <meta property="og:description" content="大步小步算法用于解决：已知A, B, C，求X使得A^x &#x3D; B (mod C)成立。我们令x &#x3D; im - j            |      m &#x3D; ceil(sqrt(C))， i &#x3D; [1, m]， j &#x3D; [0, m]那么原式就变成了：A^(im) &#x3D; A^j * B我们先枚举j，把A^j * B加入哈希表然后枚举i，在表中查照A^(i*m)，如果找到了，那么就找到了一个解。算法的复">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-01-25T09:33:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.753Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.733Z">
 <meta property="article:author" content="Chen Geng">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -195,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -210,7 +327,7 @@
 
       
         <p>大步小步算法用于解决：已知A, B, C，求X使得<br>A^x = B (mod C)<br>成立。<br>我们令x = i<em>m - j            |      m = ceil(sqrt(C))， i = [1, m]， j = [0, m]<br>那么原式就变成了：<br>A^(i</em>m) = A^j * B<br>我们先枚举j，把A^j * B加入哈希表<br>然后枚举i，在表中查照A^(i*m)，如果找到了，那么就找到了一个解。<br>算法的复杂度为O(n^0.5)<br>代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">#define ll long long</span><br><span class="line">using namespace std;</span><br><span class="line">ll p, a, b, X1, t, T;</span><br><span class="line">ll pow(ll a, ll b, ll p) &#123;</span><br><span class="line">    ll ans &#x3D; 1;</span><br><span class="line">    while(b) &#123;</span><br><span class="line">        if(b &amp; 1) ans &#x3D; ans * a % p;</span><br><span class="line">        b &gt;&gt;&#x3D; 1;</span><br><span class="line">        a &#x3D; a * a % p;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br><span class="line">ll inv(ll a, ll p) &#123;</span><br><span class="line">    return pow(a, p-2, p);</span><br><span class="line">&#125;</span><br><span class="line">map&lt;ll, ll&gt; mp;</span><br><span class="line">ll BSGS(ll A, ll B, ll C) &#123;</span><br><span class="line">    mp.clear();</span><br><span class="line">    if(A % C &#x3D;&#x3D; 0) return -2;</span><br><span class="line">    ll m &#x3D; ceil(sqrt(C));</span><br><span class="line">    ll ans;</span><br><span class="line">    for(int i &#x3D; 0; i &lt;&#x3D; m; i++) &#123;</span><br><span class="line">        if(i &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            ans &#x3D; B % C;</span><br><span class="line">            mp[ans] &#x3D; i;</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        ans &#x3D; (ans * A) % C;</span><br><span class="line">        mp[ans] &#x3D; i;</span><br><span class="line">    &#125;</span><br><span class="line">    ll t &#x3D; pow(A, m, C); </span><br><span class="line">    ans &#x3D; t;</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;</span><br><span class="line">        if(i !&#x3D; 1)ans &#x3D; ans * t % C;</span><br><span class="line">        if(mp.count(ans)) &#123;</span><br><span class="line">            int ret &#x3D; i * m % C - mp[ans] % C;</span><br><span class="line">            return (ret % C + C)%C;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return -2;</span><br><span class="line">&#125; </span><br><span class="line">int main() &#123;</span><br><span class="line">   &#x2F;&#x2F; freopen(&quot;input&quot;, &quot;r&quot;, stdin);</span><br><span class="line">    scanf(&quot;%lld&quot;, &amp;T);</span><br><span class="line">    while(T--) &#123;</span><br><span class="line">        scanf(&quot;%lld %lld %lld %lld %lld&quot;, &amp;p, &amp;a, &amp;b, &amp;X1, &amp;t);</span><br><span class="line">        if(X1 &#x3D;&#x3D; t) &#123;</span><br><span class="line">            printf(&quot;%d\n&quot;, 1);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        if(a &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            if(t &#x3D;&#x3D; b) &#123;</span><br><span class="line">                printf(&quot;%d\n&quot;, 2);</span><br><span class="line">            &#125;</span><br><span class="line">            else printf(&quot;%d\n&quot;, -1);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        if(a &#x3D;&#x3D; 1) &#123;</span><br><span class="line">            if(b &#x3D;&#x3D; 0) &#123;</span><br><span class="line">                printf(&quot;%d\n&quot;, -1);</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            ll ans &#x3D; (((t-X1)%p + p)%p * inv(b, p)) % p;</span><br><span class="line">            printf(&quot;%lld\n&quot;, ans+1);</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        X1 %&#x3D; p, a %&#x3D; p, b %&#x3D; p, t%&#x3D; p;</span><br><span class="line">        ll tmp &#x3D; (b%p * inv(a-1, p))%p;</span><br><span class="line">        ll B &#x3D; ((t+tmp)%p * inv((X1+tmp) % p, p)) % p;</span><br><span class="line">        ll A &#x3D; a;</span><br><span class="line">        ll ans &#x3D; BSGS(A, B, p);</span><br><span class="line">        printf(&quot;%lld\n&quot;, ans+1);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">#define ll long long</span><br><span class="line">using namespace std;</span><br><span class="line">ll p, a, b, X1, t, T;</span><br><span class="line">ll pow(ll a, ll b, ll p) {</span><br><span class="line">    ll ans = 1;</span><br><span class="line">    while(b) {</span><br><span class="line">        if(b &amp; 1) ans = ans * a % p;</span><br><span class="line">        b &gt;&gt;= 1;</span><br><span class="line">        a = a * a % p;</span><br><span class="line">    }</span><br><span class="line">    return ans;</span><br><span class="line">}</span><br><span class="line">ll inv(ll a, ll p) {</span><br><span class="line">    return pow(a, p-2, p);</span><br><span class="line">}</span><br><span class="line">map&lt;ll, ll&gt; mp;</span><br><span class="line">ll BSGS(ll A, ll B, ll C) {</span><br><span class="line">    mp.clear();</span><br><span class="line">    if(A % C == 0) return -2;</span><br><span class="line">    ll m = ceil(sqrt(C));</span><br><span class="line">    ll ans;</span><br><span class="line">    for(int i = 0; i &lt;= m; i++) {</span><br><span class="line">        if(i == 0) {</span><br><span class="line">            ans = B % C;</span><br><span class="line">            mp[ans] = i;</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        ans = (ans * A) % C;</span><br><span class="line">        mp[ans] = i;</span><br><span class="line">    }</span><br><span class="line">    ll t = pow(A, m, C); </span><br><span class="line">    ans = t;</span><br><span class="line">    for(int i = 1; i &lt;= m; i++) {</span><br><span class="line">        if(i != 1)ans = ans * t % C;</span><br><span class="line">        if(mp.count(ans)) {</span><br><span class="line">            int ret = i * m % C - mp[ans] % C;</span><br><span class="line">            return (ret % C + C)%C;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    return -2;</span><br><span class="line">} </span><br><span class="line">int main() {</span><br><span class="line">   // freopen("input", "r", stdin);</span><br><span class="line">    scanf("%lld", &amp;T);</span><br><span class="line">    while(T--) {</span><br><span class="line">        scanf("%lld %lld %lld %lld %lld", &amp;p, &amp;a, &amp;b, &amp;X1, &amp;t);</span><br><span class="line">        if(X1 == t) {</span><br><span class="line">            printf("%d\n", 1);</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        if(a == 0) {</span><br><span class="line">            if(t == b) {</span><br><span class="line">                printf("%d\n", 2);</span><br><span class="line">            }</span><br><span class="line">            else printf("%d\n", -1);</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        if(a == 1) {</span><br><span class="line">            if(b == 0) {</span><br><span class="line">                printf("%d\n", -1);</span><br><span class="line">                continue;</span><br><span class="line">            }</span><br><span class="line">            ll ans = (((t-X1)%p + p)%p * inv(b, p)) % p;</span><br><span class="line">            printf("%lld\n", ans+1);</span><br><span class="line">            continue;</span><br><span class="line">        }</span><br><span class="line">        X1 %= p, a %= p, b %= p, t%= p;</span><br><span class="line">        ll tmp = (b%p * inv(a-1, p))%p;</span><br><span class="line">        ll B = ((t+tmp)%p * inv((X1+tmp) % p, p)) % p;</span><br><span class="line">        ll A = a;</span><br><span class="line">        ll ans = BSGS(A, B, p);</span><br><span class="line">        printf("%lld\n", ans+1);</span><br><span class="line">    }</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     

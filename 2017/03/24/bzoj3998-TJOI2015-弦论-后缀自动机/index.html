@@ -28,7 +28,7 @@
 <meta property="og:description" content="Brief Description给定一个字符串, 您需要求出他的严格k小子串或非严格k小子串. Algorithm Design考察使用后缀自动机.首先原串建SAM, 然后如果考察每个状态代表的子串的出现次数. 可以知道, 在parent树上某个节点的出现次数就是他的所有儿子的出现次数之和. 所以, 我们可以按照len基数排序, 然后根据这种拓扑序把出现次数计算出来, 同时, 我们也统计出了以某">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-03-24T15:34:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.753Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.733Z">
 <meta property="article:author" content="Chen Geng">
 <meta property="article:tag" content="字符串">
 <meta property="article:tag" content="后缀自动机">
@@ -78,7 +78,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -197,7 +314,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -213,7 +330,7 @@
       
         <h1 id="Brief-Description"><a href="#Brief-Description" class="headerlink" title="Brief Description"></a>Brief Description</h1><p>给定一个字符串, 您需要求出他的严格k小子串或非严格k小子串.</p>
 <h1 id="Algorithm-Design"><a href="#Algorithm-Design" class="headerlink" title="Algorithm Design"></a>Algorithm Design</h1><p>考察使用后缀自动机.<br>首先原串建SAM, 然后如果考察每个状态代表的子串的出现次数. 可以知道, 在parent树上某个节点的出现次数就是他的所有儿子的出现次数之和. 所以, 我们可以按照len基数排序, 然后根据这种拓扑序把出现次数计算出来, 同时, 我们也统计出了以某个节点为根的子树的出现次数总和.<br>有了每个状态的出现次数之后, 我们运行后缀自动机, 每次选择字典序最小的转移, 如果转移到达的状态所为根的子树的总出现次数大于k, 我们就可以输出这个字符, 同时k-=sum[trans[x][i]].</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">5e5</span> + <span class="number">1e2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn &lt;&lt; <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> N, T, k;</span><br><span class="line"><span class="keyword">char</span> str[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Suffix_Automaton</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> rt, last, trans[maxm][<span class="number">26</span>], fa[maxm], sz, len[maxm], cnt[maxm];</span><br><span class="line">  <span class="keyword">int</span> v[maxn], q[maxm], sum[maxm];</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    sz = <span class="number">0</span>;</span><br><span class="line">    rt = last = ++sz;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p = last, np = last = ++sz;</span><br><span class="line">    len[np] = len[p] + <span class="number">1</span>;</span><br><span class="line">    cnt[np] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (!trans[p][x] &amp;&amp; p) &#123;</span><br><span class="line">      trans[p][x] = np;</span><br><span class="line">      p = fa[p];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!p) &#123;</span><br><span class="line">      fa[np] = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">int</span> q = trans[p][x];</span><br><span class="line">      <span class="keyword">if</span> (len[q] == len[p] + <span class="number">1</span>) &#123;</span><br><span class="line">        fa[np] = q;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> nq = ++sz;</span><br><span class="line">        len[nq] = len[p] + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memcpy</span>(trans[nq], trans[q], <span class="keyword">sizeof</span>(trans[q]));</span><br><span class="line">        fa[nq] = fa[q];</span><br><span class="line">        fa[q] = fa[np] = nq;</span><br><span class="line">        <span class="keyword">while</span> (trans[p][x] == q) &#123;</span><br><span class="line">          trans[p][x] = nq;</span><br><span class="line">          p = fa[p];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pre</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sz; i++)</span><br><span class="line">      v[len[i]]++;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= ::N; i++)</span><br><span class="line">      v[i] += v[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--)</span><br><span class="line">      q[v[len[i]]--] = i;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--) &#123;</span><br><span class="line">      <span class="keyword">int</span> t = q[i];</span><br><span class="line">      <span class="keyword">if</span> (T == <span class="number">1</span>)</span><br><span class="line">        cnt[fa[t]] += cnt[t];</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        cnt[t] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cnt[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--) &#123;</span><br><span class="line">      <span class="keyword">int</span> t = q[i];</span><br><span class="line">      sum[t] = cnt[t];</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++)</span><br><span class="line">        sum[t] += sum[trans[t][j]];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (k &lt;= cnt[x])</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    k -= cnt[x];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">int</span> t = trans[x][i]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (k &lt;= sum[t]) &#123;</span><br><span class="line">          <span class="built_in">putchar</span>(i + <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">          dfs(t, k);</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        k -= sum[t];</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; sam;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ONLINE_JUDGE</span></span><br><span class="line">  freopen(<span class="string">&quot;input&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="built_in">stdin</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str + <span class="number">1</span>);</span><br><span class="line">  N = <span class="built_in">strlen</span>(str + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;T, &amp;k);</span><br><span class="line">  sam.init();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123;</span><br><span class="line">    sam.insert(str[i] - <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  sam.pre();</span><br><span class="line">  <span class="keyword">if</span> (k &gt; sam.sum[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    sam.dfs(<span class="number">1</span>, k);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">5e5</span> + <span class="number">1e2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm = maxn &lt;&lt; <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> N, T, k;</span><br><span class="line"><span class="keyword">char</span> str[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Suffix_Automaton</span> {</span></span><br><span class="line">  <span class="keyword">int</span> rt, last, trans[maxm][<span class="number">26</span>], fa[maxm], sz, len[maxm], cnt[maxm];</span><br><span class="line">  <span class="keyword">int</span> v[maxn], q[maxm], sum[maxm];</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>{</span><br><span class="line">    sz = <span class="number">0</span>;</span><br><span class="line">    rt = last = ++sz;</span><br><span class="line">  }</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> p = last, np = last = ++sz;</span><br><span class="line">    len[np] = len[p] + <span class="number">1</span>;</span><br><span class="line">    cnt[np] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (!trans[p][x] &amp;&amp; p) {</span><br><span class="line">      trans[p][x] = np;</span><br><span class="line">      p = fa[p];</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span> (!p) {</span><br><span class="line">      fa[np] = <span class="number">1</span>;</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="keyword">int</span> q = trans[p][x];</span><br><span class="line">      <span class="keyword">if</span> (len[q] == len[p] + <span class="number">1</span>) {</span><br><span class="line">        fa[np] = q;</span><br><span class="line">      } <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">int</span> nq = ++sz;</span><br><span class="line">        len[nq] = len[p] + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memcpy</span>(trans[nq], trans[q], <span class="keyword">sizeof</span>(trans[q]));</span><br><span class="line">        fa[nq] = fa[q];</span><br><span class="line">        fa[q] = fa[np] = nq;</span><br><span class="line">        <span class="keyword">while</span> (trans[p][x] == q) {</span><br><span class="line">          trans[p][x] = nq;</span><br><span class="line">          p = fa[p];</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">pre</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sz; i++)</span><br><span class="line">      v[len[i]]++;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= ::N; i++)</span><br><span class="line">      v[i] += v[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--)</span><br><span class="line">      q[v[len[i]]--] = i;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--) {</span><br><span class="line">      <span class="keyword">int</span> t = q[i];</span><br><span class="line">      <span class="keyword">if</span> (T == <span class="number">1</span>)</span><br><span class="line">        cnt[fa[t]] += cnt[t];</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        cnt[t] = <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    cnt[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = sz; i; i--) {</span><br><span class="line">      <span class="keyword">int</span> t = q[i];</span><br><span class="line">      sum[t] = cnt[t];</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++)</span><br><span class="line">        sum[t] += sum[trans[t][j]];</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (k &lt;= cnt[x])</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    k -= cnt[x];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">int</span> t = trans[x][i]) {</span><br><span class="line">        <span class="keyword">if</span> (k &lt;= sum[t]) {</span><br><span class="line">          <span class="built_in">putchar</span>(i + <span class="string">'a'</span>);</span><br><span class="line">          dfs(t, k);</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        }</span><br><span class="line">        k -= sum[t];</span><br><span class="line">      }</span><br><span class="line">  }</span><br><span class="line">} sam;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ONLINE_JUDGE</span></span><br><span class="line">  freopen(<span class="string">"input"</span>, <span class="string">"r"</span>, <span class="built_in">stdin</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%s"</span>, str + <span class="number">1</span>);</span><br><span class="line">  N = <span class="built_in">strlen</span>(str + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;T, &amp;k);</span><br><span class="line">  sam.init();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) {</span><br><span class="line">    sam.insert(str[i] - <span class="string">'a'</span>);</span><br><span class="line">  }</span><br><span class="line">  sam.pre();</span><br><span class="line">  <span class="keyword">if</span> (k &gt; sam.sum[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"-1\n"</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    sam.dfs(<span class="number">1</span>, k);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     

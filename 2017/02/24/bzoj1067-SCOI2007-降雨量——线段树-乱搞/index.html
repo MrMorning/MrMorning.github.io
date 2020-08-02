@@ -28,7 +28,7 @@
 <meta property="og:description" content="题目大意传送门">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-02-24T15:37:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta property="article:tag" content="线段树">
 <meta property="article:tag" content="乱搞">
@@ -78,7 +78,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -197,7 +314,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -218,7 +335,7 @@
 <p>骗分出奇迹，乱搞最神奇！</p>
 </blockquote>
 <p>这句话在这道题上得到了鲜明的体现。<br>我的方法就是魔改版线段树，乱搞搞一下，首先借鉴了黄学长的建树方法，直接用一个节点维护年份的区间，但是这样就带来了问题，就是在查询的时候非常难以操作。经过不断的乱搞，我终于把正确的操作方式搞了出来。。。<br>另外这个题细节还是很多。详见<a target="_blank" rel="noopener" href="http://blog.csdn.net/huzecong/article/details/8563362">胡泽聪dalao的分析</a></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn &#x3D; 50005;</span><br><span class="line">struct seg &#123;</span><br><span class="line">  int l, r, mx, know;</span><br><span class="line">&#125; t[maxn * 4];</span><br><span class="line">int s[maxn], n, m;</span><br><span class="line">void build(int k, int l, int r) &#123;</span><br><span class="line">  if (l &#x3D;&#x3D; r) &#123;</span><br><span class="line">    scanf(&quot;%d %d&quot;, &amp;t[k].l, &amp;t[k].mx);</span><br><span class="line">    t[k].r &#x3D; t[k].l;</span><br><span class="line">    t[k].know &#x3D; 1;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  int mid &#x3D; (l + r) &gt;&gt; 1;</span><br><span class="line">  build(k &lt;&lt; 1, l, mid);</span><br><span class="line">  build(k &lt;&lt; 1 | 1, mid + 1, r);</span><br><span class="line">  t[k].know &#x3D; (t[k &lt;&lt; 1].know &amp;&amp; t[k &lt;&lt; 1 | 1].know);</span><br><span class="line">  if (t[k &lt;&lt; 1].r + 1 !&#x3D; t[k &lt;&lt; 1 | 1].l)</span><br><span class="line">    t[k].know &#x3D; 0;</span><br><span class="line">  t[k].l &#x3D; t[k &lt;&lt; 1].l;</span><br><span class="line">  t[k].r &#x3D; t[k &lt;&lt; 1 | 1].r;</span><br><span class="line">  t[k].mx &#x3D; max(t[k &lt;&lt; 1].mx, t[k &lt;&lt; 1 | 1].mx);</span><br><span class="line">&#125;</span><br><span class="line">int query_mx(int k, int x, int y) &#123;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r;</span><br><span class="line">  if (y &lt; x)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x &lt; l)</span><br><span class="line">    x &#x3D; l;</span><br><span class="line">  if (y &gt; r)</span><br><span class="line">    y &#x3D; r;</span><br><span class="line">  if (x &#x3D;&#x3D; l &amp;&amp; r &#x3D;&#x3D; y)</span><br><span class="line">    return t[k].mx;</span><br><span class="line">  int mid &#x3D; t[k &lt;&lt; 1].r;</span><br><span class="line">  int nxmid &#x3D; t[k &lt;&lt; 1 | 1].l;</span><br><span class="line">  if (y &lt; l || x &gt; r)</span><br><span class="line">    return 0;</span><br><span class="line">  int ans &#x3D; -0x3f3f3f;</span><br><span class="line">  if (x &gt;&#x3D; l &amp;&amp; y &lt; nxmid &amp;&amp; x &lt;&#x3D; mid) &#123;</span><br><span class="line">    ans &#x3D; max(ans, query_mx(k &lt;&lt; 1, x, y));</span><br><span class="line">  &#125; else if (y &lt;&#x3D; r &amp;&amp; x &gt; mid &amp;&amp; y &gt;&#x3D; nxmid) &#123;</span><br><span class="line">    ans &#x3D; max(ans, query_mx(k &lt;&lt; 1 | 1, x, y));</span><br><span class="line">  &#125; else if (x &gt;&#x3D; l &amp;&amp; x &lt;&#x3D; mid &amp;&amp; y &gt;&#x3D; nxmid &amp;&amp; y &lt;&#x3D; r) &#123;</span><br><span class="line">    ans &#x3D; max(ans, query_mx(k &lt;&lt; 1, x, mid));</span><br><span class="line">    ans &#x3D; max(ans, query_mx(k &lt;&lt; 1 | 1, nxmid, y));</span><br><span class="line">  &#125; else</span><br><span class="line">    return 0;</span><br><span class="line">  return ans;</span><br><span class="line">&#125;</span><br><span class="line">int query_know(int k, int x, int y) &#123;</span><br><span class="line">  int l &#x3D; t[k].l, r &#x3D; t[k].r;</span><br><span class="line">  if (y &lt; x)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x &lt; l || y &gt; r)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x &#x3D;&#x3D; l &amp;&amp; y &#x3D;&#x3D; r)</span><br><span class="line">    return t[k].know;</span><br><span class="line">  else if (r - l &#x3D;&#x3D; 0)</span><br><span class="line">    return 0;</span><br><span class="line">  bool ans &#x3D; true;</span><br><span class="line">  int mid &#x3D; t[k &lt;&lt; 1].r;</span><br><span class="line">  int nxmid &#x3D; t[k &lt;&lt; 1 | 1].l;</span><br><span class="line">  if (x &gt;&#x3D; l &amp;&amp; y &lt; nxmid &amp;&amp; x &lt;&#x3D; mid) &#123;</span><br><span class="line">    ans &#x3D; ans &amp;&amp; query_know(k &lt;&lt; 1, x, y);</span><br><span class="line">  &#125; else if (y &lt;&#x3D; r &amp;&amp; x &gt; mid &amp;&amp; y &gt;&#x3D; nxmid) &#123;</span><br><span class="line">    ans &#x3D; ans &amp;&amp; query_know(k &lt;&lt; 1 | 1, x, y);</span><br><span class="line">  &#125; else if (x &gt;&#x3D; l &amp;&amp; x &lt;&#x3D; mid &amp;&amp; y &gt;&#x3D; nxmid &amp;&amp; y &lt;&#x3D; r) &#123;</span><br><span class="line">    ans &#x3D; ans &amp;&amp; query_know(k &lt;&lt; 1, x, mid);</span><br><span class="line">    ans &#x3D; ans &amp;&amp; query_know(k &lt;&lt; 1 | 1, nxmid, y);</span><br><span class="line">    ans &#x3D; ans &amp;&amp; (nxmid-mid &lt;&#x3D; 1) ?  1 : 0;</span><br><span class="line">  &#125; else</span><br><span class="line">    return 0;</span><br><span class="line">  return ans;</span><br><span class="line">&#125;</span><br><span class="line">int query(int k, int x) &#123;</span><br><span class="line">  if (t[k].l &#x3D;&#x3D; t[k].r)</span><br><span class="line">    return t[k].mx;</span><br><span class="line">  if (x &lt;&#x3D; t[k &lt;&lt; 1].r)</span><br><span class="line">    return query(k &lt;&lt; 1, x);</span><br><span class="line">  else if (x &gt;&#x3D; t[k &lt;&lt; 1 | 1].l)</span><br><span class="line">    return query(k &lt;&lt; 1 | 1, x);</span><br><span class="line">  else</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">  &#x2F;&#x2F;freopen(&quot;rain.in&quot;, &quot;r&quot;, stdin);</span><br><span class="line">  &#x2F;&#x2F;freopen(&quot;rain.ans&quot;, &quot;w&quot;, stdout);</span><br><span class="line">  scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">  build(1, 1, n);</span><br><span class="line">  scanf(&quot;%d&quot;, &amp;m);</span><br><span class="line">  &#x2F;&#x2F; cout &lt;&lt; query_mx(1, 2003, 2007);</span><br><span class="line">   &#x2F;&#x2F;cout &lt;&lt; query_know(1, -138, -129) &lt;&lt; endl;</span><br><span class="line">  &#x2F;&#x2F; cout &lt;&lt; query_know(1, 2004, 2006) &lt;&lt; endl;</span><br><span class="line">  for (int i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;</span><br><span class="line">    int x, y;</span><br><span class="line">    scanf(&quot;%d %d&quot;, &amp;x, &amp;y);</span><br><span class="line">    if (query_know(1, x, y) &amp;&amp; (query(1, x) &gt;&#x3D; query(1, y)) &amp;&amp;</span><br><span class="line">        (query_mx(1, x + 1, y - 1) &lt; query(1, y)))</span><br><span class="line">      printf(&quot;true\n&quot;);</span><br><span class="line">    else if (query_know(1, x, x) &amp;&amp; query_know(1, y, y) &amp;&amp;</span><br><span class="line">             !(query_know(1, x + 1, y - 1)) &amp;&amp;</span><br><span class="line">             (query_mx(1, x + 1, y - 1) &lt; query(1, y)) &amp;&amp;</span><br><span class="line">             (query(1, x) &gt;&#x3D; query(1, y)))</span><br><span class="line">      printf(&quot;maybe\n&quot;);</span><br><span class="line">    else if (query_know(1, x, x) &amp;&amp; !(query_know(1, y, y)) &amp;&amp; (query_mx(1,x+1,y-1) &lt; query(1,x)))</span><br><span class="line">      printf(&quot;maybe\n&quot;);</span><br><span class="line">    else if (query_know(1, y, y) &amp;&amp; !(query_know(1, x, x)) &amp;&amp;</span><br><span class="line">             (query_mx(1, x + 1, y - 1) &lt; query(1, y)))</span><br><span class="line">      printf(&quot;maybe\n&quot;);</span><br><span class="line">    else if ((!(query_know(1, x, x)) &amp;&amp; (!(query_know(1, y, y)))))</span><br><span class="line">      printf(&quot;maybe\n&quot;);</span><br><span class="line">    else</span><br><span class="line">      printf(&quot;false\n&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int maxn = 50005;</span><br><span class="line">struct seg {</span><br><span class="line">  int l, r, mx, know;</span><br><span class="line">} t[maxn * 4];</span><br><span class="line">int s[maxn], n, m;</span><br><span class="line">void build(int k, int l, int r) {</span><br><span class="line">  if (l == r) {</span><br><span class="line">    scanf("%d %d", &amp;t[k].l, &amp;t[k].mx);</span><br><span class="line">    t[k].r = t[k].l;</span><br><span class="line">    t[k].know = 1;</span><br><span class="line">    return;</span><br><span class="line">  }</span><br><span class="line">  int mid = (l + r) &gt;&gt; 1;</span><br><span class="line">  build(k &lt;&lt; 1, l, mid);</span><br><span class="line">  build(k &lt;&lt; 1 | 1, mid + 1, r);</span><br><span class="line">  t[k].know = (t[k &lt;&lt; 1].know &amp;&amp; t[k &lt;&lt; 1 | 1].know);</span><br><span class="line">  if (t[k &lt;&lt; 1].r + 1 != t[k &lt;&lt; 1 | 1].l)</span><br><span class="line">    t[k].know = 0;</span><br><span class="line">  t[k].l = t[k &lt;&lt; 1].l;</span><br><span class="line">  t[k].r = t[k &lt;&lt; 1 | 1].r;</span><br><span class="line">  t[k].mx = max(t[k &lt;&lt; 1].mx, t[k &lt;&lt; 1 | 1].mx);</span><br><span class="line">}</span><br><span class="line">int query_mx(int k, int x, int y) {</span><br><span class="line">  int l = t[k].l, r = t[k].r;</span><br><span class="line">  if (y &lt; x)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x &lt; l)</span><br><span class="line">    x = l;</span><br><span class="line">  if (y &gt; r)</span><br><span class="line">    y = r;</span><br><span class="line">  if (x == l &amp;&amp; r == y)</span><br><span class="line">    return t[k].mx;</span><br><span class="line">  int mid = t[k &lt;&lt; 1].r;</span><br><span class="line">  int nxmid = t[k &lt;&lt; 1 | 1].l;</span><br><span class="line">  if (y &lt; l || x &gt; r)</span><br><span class="line">    return 0;</span><br><span class="line">  int ans = -0x3f3f3f;</span><br><span class="line">  if (x &gt;= l &amp;&amp; y &lt; nxmid &amp;&amp; x &lt;= mid) {</span><br><span class="line">    ans = max(ans, query_mx(k &lt;&lt; 1, x, y));</span><br><span class="line">  } else if (y &lt;= r &amp;&amp; x &gt; mid &amp;&amp; y &gt;= nxmid) {</span><br><span class="line">    ans = max(ans, query_mx(k &lt;&lt; 1 | 1, x, y));</span><br><span class="line">  } else if (x &gt;= l &amp;&amp; x &lt;= mid &amp;&amp; y &gt;= nxmid &amp;&amp; y &lt;= r) {</span><br><span class="line">    ans = max(ans, query_mx(k &lt;&lt; 1, x, mid));</span><br><span class="line">    ans = max(ans, query_mx(k &lt;&lt; 1 | 1, nxmid, y));</span><br><span class="line">  } else</span><br><span class="line">    return 0;</span><br><span class="line">  return ans;</span><br><span class="line">}</span><br><span class="line">int query_know(int k, int x, int y) {</span><br><span class="line">  int l = t[k].l, r = t[k].r;</span><br><span class="line">  if (y &lt; x)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x &lt; l || y &gt; r)</span><br><span class="line">    return 0;</span><br><span class="line">  if (x == l &amp;&amp; y == r)</span><br><span class="line">    return t[k].know;</span><br><span class="line">  else if (r - l == 0)</span><br><span class="line">    return 0;</span><br><span class="line">  bool ans = true;</span><br><span class="line">  int mid = t[k &lt;&lt; 1].r;</span><br><span class="line">  int nxmid = t[k &lt;&lt; 1 | 1].l;</span><br><span class="line">  if (x &gt;= l &amp;&amp; y &lt; nxmid &amp;&amp; x &lt;= mid) {</span><br><span class="line">    ans = ans &amp;&amp; query_know(k &lt;&lt; 1, x, y);</span><br><span class="line">  } else if (y &lt;= r &amp;&amp; x &gt; mid &amp;&amp; y &gt;= nxmid) {</span><br><span class="line">    ans = ans &amp;&amp; query_know(k &lt;&lt; 1 | 1, x, y);</span><br><span class="line">  } else if (x &gt;= l &amp;&amp; x &lt;= mid &amp;&amp; y &gt;= nxmid &amp;&amp; y &lt;= r) {</span><br><span class="line">    ans = ans &amp;&amp; query_know(k &lt;&lt; 1, x, mid);</span><br><span class="line">    ans = ans &amp;&amp; query_know(k &lt;&lt; 1 | 1, nxmid, y);</span><br><span class="line">    ans = ans &amp;&amp; (nxmid-mid &lt;= 1) ?  1 : 0;</span><br><span class="line">  } else</span><br><span class="line">    return 0;</span><br><span class="line">  return ans;</span><br><span class="line">}</span><br><span class="line">int query(int k, int x) {</span><br><span class="line">  if (t[k].l == t[k].r)</span><br><span class="line">    return t[k].mx;</span><br><span class="line">  if (x &lt;= t[k &lt;&lt; 1].r)</span><br><span class="line">    return query(k &lt;&lt; 1, x);</span><br><span class="line">  else if (x &gt;= t[k &lt;&lt; 1 | 1].l)</span><br><span class="line">    return query(k &lt;&lt; 1 | 1, x);</span><br><span class="line">  else</span><br><span class="line">    return -1;</span><br><span class="line">}</span><br><span class="line">int main() {</span><br><span class="line">  //freopen("rain.in", "r", stdin);</span><br><span class="line">  //freopen("rain.ans", "w", stdout);</span><br><span class="line">  scanf("%d", &amp;n);</span><br><span class="line">  build(1, 1, n);</span><br><span class="line">  scanf("%d", &amp;m);</span><br><span class="line">  // cout &lt;&lt; query_mx(1, 2003, 2007);</span><br><span class="line">   //cout &lt;&lt; query_know(1, -138, -129) &lt;&lt; endl;</span><br><span class="line">  // cout &lt;&lt; query_know(1, 2004, 2006) &lt;&lt; endl;</span><br><span class="line">  for (int i = 1; i &lt;= m; i++) {</span><br><span class="line">    int x, y;</span><br><span class="line">    scanf("%d %d", &amp;x, &amp;y);</span><br><span class="line">    if (query_know(1, x, y) &amp;&amp; (query(1, x) &gt;= query(1, y)) &amp;&amp;</span><br><span class="line">        (query_mx(1, x + 1, y - 1) &lt; query(1, y)))</span><br><span class="line">      printf("true\n");</span><br><span class="line">    else if (query_know(1, x, x) &amp;&amp; query_know(1, y, y) &amp;&amp;</span><br><span class="line">             !(query_know(1, x + 1, y - 1)) &amp;&amp;</span><br><span class="line">             (query_mx(1, x + 1, y - 1) &lt; query(1, y)) &amp;&amp;</span><br><span class="line">             (query(1, x) &gt;= query(1, y)))</span><br><span class="line">      printf("maybe\n");</span><br><span class="line">    else if (query_know(1, x, x) &amp;&amp; !(query_know(1, y, y)) &amp;&amp; (query_mx(1,x+1,y-1) &lt; query(1,x)))</span><br><span class="line">      printf("maybe\n");</span><br><span class="line">    else if (query_know(1, y, y) &amp;&amp; !(query_know(1, x, x)) &amp;&amp;</span><br><span class="line">             (query_mx(1, x + 1, y - 1) &lt; query(1, y)))</span><br><span class="line">      printf("maybe\n");</span><br><span class="line">    else if ((!(query_know(1, x, x)) &amp;&amp; (!(query_know(1, y, y)))))</span><br><span class="line">      printf("maybe\n");</span><br><span class="line">    else</span><br><span class="line">      printf("false\n");</span><br><span class="line">  }</span><br><span class="line">  return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>Ps.开始对着样例乱搞出的代码居然得了50分</p>
 

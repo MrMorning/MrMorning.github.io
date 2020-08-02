@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mrmorning.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="同样是一个bfs水题。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;typedef pair&lt;int, int&gt; St;St sta">
+  <meta name="description" content="同样是一个bfs水题。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;typedef pair&lt;int, int&gt; St;St start;qu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="P1443 马的遍历">
 <meta property="og:url" content="mrmorning.github.io/2016/10/29/P1443-%E9%A9%AC%E7%9A%84%E9%81%8D%E5%8E%86/index.html">
 <meta property="og:site_name" content="Chen Geng&#39;s Blog">
-<meta property="og:description" content="同样是一个bfs水题。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;typedef pair&lt;int, int&gt; St;St sta">
+<meta property="og:description" content="同样是一个bfs水题。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051#include &lt;bits&#x2F;stdc++.h&gt;using namespace std;typedef pair&lt;int, int&gt; St;St start;qu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-10-29T11:36:00.000Z">
-<meta property="article:modified_time" content="2020-08-02T09:03:59.749Z">
+<meta property="article:modified_time" content="2020-08-02T09:18:09.729Z">
 <meta property="article:author" content="Chen Geng">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,124 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -195,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-02 09:03:59" itemprop="dateModified" datetime="2020-08-02T09:03:59+00:00">2020-08-02</time>
+                <time title="Modified: 2020-08-02 09:18:09" itemprop="dateModified" datetime="2020-08-02T09:18:09+00:00">2020-08-02</time>
               </span>
 
           
@@ -210,7 +327,7 @@
 
       
         <p>同样是一个bfs水题。。。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef pair&lt;int, int&gt; St;</span><br><span class="line">St start;</span><br><span class="line">queue&lt;St&gt; sts;</span><br><span class="line">map&lt;St, int&gt; dist;</span><br><span class="line">int n, m, x, y;</span><br><span class="line">const int dx[] &#x3D; &#123;-1, 1, 2, 2, 1, -1, -2, -2&#125;;</span><br><span class="line">const int dy[] &#x3D; &#123;2, 2, 1, -1, -2, -2, -1, 1&#125;;</span><br><span class="line">&#x2F;&#x2F;-----------------</span><br><span class="line">void bfs() &#123;</span><br><span class="line">    sts.push(start);</span><br><span class="line">    while(!sts.empty()) &#123;</span><br><span class="line">        St now &#x3D; sts.front(); sts.pop();</span><br><span class="line">        int nowx &#x3D; now.first;</span><br><span class="line">        int nowy &#x3D; now.second;</span><br><span class="line">        for(int i &#x3D; 0; i &lt; 8; i++) &#123;</span><br><span class="line">            int newx &#x3D; nowx + dx[i];</span><br><span class="line">            int newy &#x3D; nowy + dy[i];</span><br><span class="line">            if(newx &gt; 0 &amp;&amp; newx &lt;&#x3D; n &amp;&amp; newy &gt; 0 &amp;&amp; newy &lt;&#x3D; m) &#123;</span><br><span class="line">                St neww(newx, newy);</span><br><span class="line">                if(dist.count(neww)) continue;</span><br><span class="line">                dist[neww] &#x3D; dist[now] + 1;</span><br><span class="line">                sts.push(neww);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void output() &#123;</span><br><span class="line">    for(int i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">        for(int j &#x3D; 1; j &lt;&#x3D; m; j++) &#123;</span><br><span class="line">            if(i&#x3D;&#x3D;x&amp;&amp;j&#x3D;&#x3D;y) printf(&quot;%-5d&quot;, 0);</span><br><span class="line">            else &#123;</span><br><span class="line">                St now(i, j);</span><br><span class="line">                int d &#x3D; dist[now];</span><br><span class="line">                if(d) printf(&quot;%-5d&quot;, d);</span><br><span class="line">                else printf(&quot;%-5d&quot;, -1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;-----------------</span><br><span class="line">int main() &#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; x &gt;&gt; y;</span><br><span class="line">    start.first &#x3D; x;</span><br><span class="line">    start.second &#x3D; y;</span><br><span class="line">    bfs();</span><br><span class="line">    output();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">typedef pair&lt;int, int&gt; St;</span><br><span class="line">St start;</span><br><span class="line">queue&lt;St&gt; sts;</span><br><span class="line">map&lt;St, int&gt; dist;</span><br><span class="line">int n, m, x, y;</span><br><span class="line">const int dx[] = {-1, 1, 2, 2, 1, -1, -2, -2};</span><br><span class="line">const int dy[] = {2, 2, 1, -1, -2, -2, -1, 1};</span><br><span class="line">//-----------------</span><br><span class="line">void bfs() {</span><br><span class="line">    sts.push(start);</span><br><span class="line">    while(!sts.empty()) {</span><br><span class="line">        St now = sts.front(); sts.pop();</span><br><span class="line">        int nowx = now.first;</span><br><span class="line">        int nowy = now.second;</span><br><span class="line">        for(int i = 0; i &lt; 8; i++) {</span><br><span class="line">            int newx = nowx + dx[i];</span><br><span class="line">            int newy = nowy + dy[i];</span><br><span class="line">            if(newx &gt; 0 &amp;&amp; newx &lt;= n &amp;&amp; newy &gt; 0 &amp;&amp; newy &lt;= m) {</span><br><span class="line">                St neww(newx, newy);</span><br><span class="line">                if(dist.count(neww)) continue;</span><br><span class="line">                dist[neww] = dist[now] + 1;</span><br><span class="line">                sts.push(neww);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">void output() {</span><br><span class="line">    for(int i = 1; i &lt;= n; i++) {</span><br><span class="line">        for(int j = 1; j &lt;= m; j++) {</span><br><span class="line">            if(i==x&amp;&amp;j==y) printf("%-5d", 0);</span><br><span class="line">            else {</span><br><span class="line">                St now(i, j);</span><br><span class="line">                int d = dist[now];</span><br><span class="line">                if(d) printf("%-5d", d);</span><br><span class="line">                else printf("%-5d", -1);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">//-----------------</span><br><span class="line">int main() {</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; x &gt;&gt; y;</span><br><span class="line">    start.first = x;</span><br><span class="line">    start.second = y;</span><br><span class="line">    bfs();</span><br><span class="line">    output();</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>不过莫名其妙不知道为什么最后一个点没有过</p>
 
     </div>
