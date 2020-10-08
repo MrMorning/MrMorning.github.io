@@ -24,7 +24,7 @@ tags:
 - 其他方法
   - 设$x \in [0, \pi]$，求$\sum_{n=1}^{\infty} \frac{\sin nx}{n}$.(5.1.10) [提示：使用Riemann引理]
 
-
+<!--more-->
 
 #### 证明正项级数收敛
 
