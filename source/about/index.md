@@ -7,16 +7,20 @@ date: 2016-01-31 14:58:00
 
 ## About me:
 
-I'm a geek with great passion in computer vision and all interesting techniques such as frontend.
+I'm a geek with great passion in computer vision and all interesting techniques. I major in Computer Science(Honor Program) and minor in ACEE.
 
 I'm proud to be part of: 
 
 * Computer Science @ Zhejiang University
 * Advanced Class of Engineering Education(i.e. ACEE) @ Chu Kochen Honors College
 * Mixed Class(i.e. Honors Program of Engineering) @ Chu Kochen Honors College
-* Frontend @ QSC Tech Team(A student team which developed many popular app in Zhejiang University)
+* Frontend Team @ QSC Tech Team(A student team which developed many popular app in Zhejiang University)
 
 ### Selected courses with high grades
+
+**First Year Overall GPA: 4.78/5.0**
+
+**First Year Overall Rank: 1/112**
 
 | Course Name                              | Grades | GPA     |
 | ---------------------------------------- | ------ | ------- |
