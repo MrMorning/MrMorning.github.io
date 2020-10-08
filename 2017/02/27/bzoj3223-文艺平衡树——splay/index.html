@@ -28,7 +28,7 @@
 <meta property="og:description" content="题意你应当编写一个数据结构，支持以下操作：1. 反转一个区间 题解我们把在数组中的位置当作权值，这样原序列就在这种权值意义下有序，我们考虑使用splay维护。对于操作rev[l,r]，我们首先把l-1 splay 到根，再把r+1 splay 到根的右子树的根，那么根的右子树的左子树就是区间[l,r]。显然，这样会用到l-1和r+1。我们考虑添加两个哨兵节点，分别是1和n+2,[1,n]的值再分别">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-02-27T10:09:00.000Z">
-<meta property="article:modified_time" content="2020-10-08T04:23:44.397Z">
+<meta property="article:modified_time" content="2020-10-08T04:25:50.126Z">
 <meta property="article:author" content="Chen Geng">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="splay">
@@ -314,7 +314,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-08 04:23:44" itemprop="dateModified" datetime="2020-10-08T04:23:44+00:00">2020-10-08</time>
+                <time title="Modified: 2020-10-08 04:25:50" itemprop="dateModified" datetime="2020-10-08T04:25:50+00:00">2020-10-08</time>
               </span>
 
           
