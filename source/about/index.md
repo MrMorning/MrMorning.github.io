@@ -20,7 +20,7 @@ I'm proud to be part of:
 
 **First Year Overall GPA: 4.78/5.0**
 
-**First Year Overall Rank: 1/112**
+**First Year Overall Rank: 2/840**
 
 | Course Name                              | Grades | GPA     |
 | ---------------------------------------- | ------ | ------- |
