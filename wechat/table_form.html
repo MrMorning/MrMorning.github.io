@@ -201,7 +201,7 @@
                 <br>
                 <div style="width: 70%; display: flex; justify-content: space-between; flex-direction: row;">
                     <input id="subbtn" class="btn" type="button" value="立即注册">
-                    <input class="btn" type="reset" value="重置">
+                    <input id="resbtn" class="btn" type="reset" value="重置">
                 </div>
             </form>
         </div>
@@ -239,6 +239,7 @@
                 item.addEventListener('input', update_btn_listener);
             });
             document.querySelector('textarea').addEventListener('input', update_btn_listener);
+            document.querySelector('#resbtn').addEventListener('click', update_btn_listener);
         </script>
     </body>
 </html>
