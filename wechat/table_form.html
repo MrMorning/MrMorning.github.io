@@ -1,0 +1,227 @@
+<html>
+    <!-- code by Chen Geng -->
+    <head>
+       <style>
+            body{
+                background-color: rgb(236, 223, 223);
+                padding: 0%;
+                margin: 0px;
+                display: flex;
+                justify-content: center;
+            }
+            .container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content:space-around;
+                /* width: 800px; */
+                /* padding: 200rpx 0; */
+                /* box-sizing: border-box; */
+            }
+            .titlebar{
+            font-size: 50px;
+            font-weight: 700;
+            height: 100px;
+            font-family: x-locale-heading-primary,zillaslab,Palatino,"Palatino Linotype",x-locale-heading-secondary,serif;
+            background-color: lightblue;
+            width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            }
+            .myInput{
+                width: 140px;
+            }
+            .myInput:hover{
+                /* height: 50px; */
+                /* width: 300px; */
+                /* line-height: 30px; */
+                box-sizing: border-box;
+                /* padding: 0px 15px 0px 30px; */
+                border-width: 1px;
+                border-style: solid;
+                border-color: rgb(238, 238, 238);
+                border-image: initial;
+                outline: none;
+                border-radius: 15px;
+                transition: border-color 0.2s ease 0s;
+            }
+            /* #myInput:hover{
+                border-color: rgb(22, 236, 69);
+            } */
+            .tabtext{
+                font-size: 20px;
+                text-align: center;
+                text-align: justify;
+                text-justify: distribute-all-lines;
+                text-align-last: justify;
+                height: 50px;
+            }
+            .btn{
+                cursor: pointer;
+                outline: none;
+                width: 150px;  
+                padding:8px;  
+                background-color: #428bca;  
+                border-color: #357ebd;  
+                color: #fff;  
+                -moz-border-radius: 10px;  
+                -webkit-border-radius: 10px;  
+                border-radius: 10px; /* future proofing */  
+                -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+                text-align: center;  
+                vertical-align: middle;  
+                border: 1px solid transparent;  
+                font-weight: 900;  
+                font-size:125%  
+            }
+            input:invalid {
+                border: 2px dashed red;
+            }
+
+            input:valid {
+                border: 2px solid black;
+            }
+    </style> 
+    </head>
+    <body>
+        <div class="container">
+            <div class="titlebar">
+                微信Lab2: Form
+            </div>
+            <form action="http://localhost:5000/hello" method='POST' style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                <table style="border: 1px;">
+                    <tr>
+                        <td class="tabtext">
+                            用户名：
+                        </td>
+                        <td width=200px>
+                            <input type="text" class="myInput" name="username" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            密码：
+                        </td>
+                        <td>
+                            <input type="password"class="myInput" name="passwd" required>
+                        </td>
+                        <td class="tabtext">
+                            真实姓名：
+                        </td>
+                        <td>
+                            <input type="text"class="myInput" name="truename" required>                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            确认密码：
+                        </td>
+                        <td>
+                            <input type="password"class="myInput" name="confirm_passwd" required>
+                        </td>
+                        <td class="tabtext">
+                            手机号码：
+                        </td>
+                        <td>
+                            <input type="text"class="myInput" name="tel" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            性别：
+                        </td>
+                        <td>
+                            <input type="radio" name="sex" value="male" required> 男&nbsp; &nbsp;&nbsp;     
+                            <input type="radio" name="sex" value="female" required> 女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            民族：
+                        </td>
+                        <td>
+                            <input type="text" class="myInput" name="nation" required>
+                        </td>
+                        <td class="tabtext">
+                            邮箱：
+                        </td>
+                        <td>
+                            <input type="text" class="myInput" name="email" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            爱好：
+                        </td>
+                        <td colspan="3">
+                            <input type="checkbox" name="basketball" > 篮球 &nbsp; &nbsp;
+                            <input type="checkbox" name="football" > 足球 &nbsp; &nbsp;
+                            <input type="checkbox" name="volleyball" > 排球 &nbsp; &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            国家：
+                        </td>
+                        <td>
+                            <input name="country" type="text" class="myInput" required>
+                        </td>
+                        <td class="tabtext">
+                            城市：
+                        </td>
+                        <td>
+                            <input name="city" type="text" class="myInput" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            照片上传：
+                        </td>
+                        <td>
+                            <input type="file" name="file" id="file" accept="image/*" multiple required>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td class="tabtext">
+                            个人说明：
+                        </td>
+                        <td>
+                            <textarea cols="30" rows="5" required></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <div style="width: 70%; display: flex; justify-content: space-between; flex-direction: row;">
+                    <input id="subbtn" class="btn" type="submit" value="立即注册">
+                    <input class="btn" type="reset" value="重置">
+                </div>
+            </form>
+        </div>
+        <script>
+            let reset = ()=>{
+                document.querySelectorAll('.myInput').forEach((item)=>{
+                    item.value = "";
+                })
+            };
+            document.querySelectorAll('#subbtn')[0].style['background']='grey';
+            let input_forms = document.querySelectorAll('input');
+            let update_btn_listener = (event)=>{
+                    let flag = 1;
+                    input_forms.forEach((item)=>{
+                        if(item.validity['valueMissing']) flag = 0;
+                    })  
+                    if(document.querySelectorAll('textarea')[0].validity['valueMissing']) {
+                        flag = 0;
+                    }
+                    if(flag) document.querySelectorAll('#subbtn')[0].style['background']='green';
+                };
+            input_forms.forEach((item)=>{
+                item.addEventListener('change', update_btn_listener);
+            });
+            document.querySelectorAll('textarea').addEventListener('change', update_btn_listener);
+        </script>
+    </body>
+</html>
