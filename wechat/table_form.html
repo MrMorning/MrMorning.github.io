@@ -78,6 +78,9 @@
                 font-weight: 900;  
                 font-size:125%  
             }
+            #subbtn{
+                cursor: not-allowed;
+            }
             input:invalid {
                 border: 2px dashed red;
             }
@@ -197,7 +200,7 @@
                 </table>
                 <br>
                 <div style="width: 70%; display: flex; justify-content: space-between; flex-direction: row;">
-                    <input id="subbtn" class="btn" type="submit" value="立即注册">
+                    <input id="subbtn" class="btn" type="button" value="立即注册">
                     <input class="btn" type="reset" value="重置">
                 </div>
             </form>
@@ -208,7 +211,10 @@
                     item.value = "";
                 })
             };
-            document.querySelectorAll('#subbtn')[0].style['background']='grey';
+            let butt = document.querySelector('#subbtn');
+            butt.style['background']='grey';
+            butt['type'] = 'button';
+            butt['cursor'] = 'not-allowed';
             let input_forms = document.querySelectorAll('input');
             let update_btn_listener = (event)=>{
                     let flag = 1;
@@ -218,12 +224,21 @@
                     if(document.querySelectorAll('textarea')[0].validity['valueMissing']) {
                         flag = 0;
                     }
-                    if(flag) document.querySelectorAll('#subbtn')[0].style['background']='green';
+                    if(flag) {
+                        butt.style.background='green';
+                        butt['type'] = 'submit';
+                        butt.style.cursor = 'pointer';
+                    } else {
+                        butt.style['background']='grey';
+                        butt['type'] = 'button';
+                        butt.style.cursor = 'not-allowed';
+                        console.log("Hello");
+                    }
                 };
             input_forms.forEach((item)=>{
-                item.addEventListener('change', update_btn_listener);
+                item.addEventListener('input', update_btn_listener);
             });
-            document.querySelectorAll('textarea').addEventListener('change', update_btn_listener);
+            document.querySelector('textarea').addEventListener('input', update_btn_listener);
         </script>
     </body>
 </html>
