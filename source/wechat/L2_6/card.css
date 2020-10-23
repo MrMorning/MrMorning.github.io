@@ -1,0 +1,147 @@
+body{
+    background-color: #cee397;
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* padding: 200rpx 0; */
+    /* box-sizing: border-box; */
+}
+.card{
+    height:618px;
+    width:1000px;
+    background-color: #3797a4;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 20px 20px 20px whitesmoke;
+    flex-direction: row; 
+    align-items: flex-start;
+}
+.card_back{
+    height:618px;
+    width:1000px;
+    background-color: #3797a4;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 20px 20px 20px whitesmoke;
+    flex-direction: column; 
+    align-items: flex-start;
+}
+.avatar_col{
+    width: 382px;
+    height: 100%;
+    background-color: #8bcdcd;
+    border-radius: 10px 0px 0px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.avatar{
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 10px 5px 5px grey;
+    transition: 0.5s;
+}
+.avatar:hover{
+    transform: rotate(-45deg);
+}
+.desc{
+    color: white;
+    padding: 0px 40px 0px 40px;
+}
+.name{
+    font-family: x-locale-heading-primary,zillaslab,Palatino,"Palatino Linotype",x-locale-heading-secondary,serif;
+    font-size: 50px;
+    font-weight: bolder;
+}
+.prop{
+    font-size: 20px;
+    font-weight: light;
+    font-family: consolas,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    color:black;
+}
+.desc_col{
+    width: 618px;
+}
+#logo{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+#triangle{
+    width: 0px;
+    height: 0px;
+    border-radius: 0px 0px 0px 0px;
+    border-top: 300px solid #fa7f72;
+    border-left: 200px solid transparent;
+}
+.textbox{
+    width: 418px;
+    height: 400px;
+    position: relative;
+    left: 60px;
+    top: 80px; 
+}
+li{
+    color: whitesmoke;
+    font-size: 20px;
+    font-weight: bold;
+    /* font-family: 'Verdana', 'Futura', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    font-family: x-locale-heading-primary,zillaslab,Palatino,"Palatino Linotype",x-locale-heading-secondary,serif;
+    margin-bottom: 40px;
+}
+.card_row{
+    height: 400px;
+    width: 1000px;
+    border-radius: 10px;
+    background-color: #8bcdcd;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.logo_row{
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.logoimg{
+    position: relative;
+    right: 70px
+}
+.btn{
+    cursor: pointer;
+    outline: none;
+    width: 80px;  
+    padding:8px;  
+    background-color: #cee397;  
+    border-color: #357ebd;  
+    color: #000000;  
+    -moz-border-radius: 10px;  
+    -webkit-border-radius: 10px;  
+    border-radius: 10px; /* future proofing */  
+    -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+    text-align: center;  
+    vertical-align: middle;  
+    border: 1px solid transparent;  
+    font-weight: 900;  
+    font-size:125%  
+}
