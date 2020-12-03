@@ -1,0 +1,311 @@
+<html>
+    <!-- code by Chen Geng -->
+    <head>
+       <style>
+            body{
+                background-color: rgb(236, 223, 223);
+                padding: 0%;
+                margin: 0px;
+                display: flex;
+                justify-content: center;
+            }
+            .container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content:space-around;
+                /* width: 800px; */
+                /* padding: 200rpx 0; */
+                /* box-sizing: border-box; */
+            }
+            .titlebar{
+            font-size: 50px;
+            font-weight: 700;
+            height: 100px;
+            font-family: x-locale-heading-primary,zillaslab,Palatino,"Palatino Linotype",x-locale-heading-secondary,serif;
+            background-color: lightblue;
+            width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            }
+            .myInput{
+                width: 140px;
+            }
+            .myInput:hover{
+                /* height: 50px; */
+                /* width: 300px; */
+                /* line-height: 30px; */
+                box-sizing: border-box;
+                /* padding: 0px 15px 0px 30px; */
+                border-width: 1px;
+                border-style: solid;
+                border-color: rgb(238, 238, 238);
+                border-image: initial;
+                outline: none;
+                border-radius: 15px;
+                transition: border-color 0.2s ease 0s;
+            }
+            /* #myInput:hover{
+                border-color: rgb(22, 236, 69);
+            } */
+            .tabtext{
+                font-size: 20px;
+                text-align: center;
+                text-align: justify;
+                text-justify: distribute-all-lines;
+                text-align-last: justify;
+                height: 50px;
+            }
+            .btn{
+                cursor: pointer;
+                outline: none;
+                width: 150px;  
+                padding:8px;  
+                background-color: #428bca;  
+                border-color: #357ebd;  
+                color: #fff;  
+                -moz-border-radius: 10px;  
+                -webkit-border-radius: 10px;  
+                border-radius: 10px; /* future proofing */  
+                -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+                text-align: center;  
+                vertical-align: middle;  
+                border: 1px solid transparent;  
+                font-weight: 900;  
+                font-size:125%  
+            }
+            #subbtn{
+                cursor: not-allowed;
+            }
+            input:invalid {
+                border: 2px dashed red;
+            }
+
+            input:valid {
+                border: 2px solid black;
+            }
+    </style> 
+    </head>
+    <body>
+        <div class="container">
+            <a href="http://www.zju.edu.cn">
+                <div class="titlebar">
+                    微信Lab3: Val
+                </div>
+            </a>
+            <form action="http://localhost:5000/hello" method='POST' style="display: flex; flex-direction: column; align-items: center; justify-content: space-around;" >
+                <table style="border: 1px;">
+                    <tr>
+                        <td class="tabtext">
+                            用户名：
+                        </td>
+                        <td width=200px>
+                            <input type="text" class="myInput" name="username" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            密码：
+                        </td>
+                        <td>
+                            <input type="password"class="myInput" name="passwd" required>
+                        </td>
+                        <td class="tabtext">
+                            真实姓名：
+                        </td>
+                        <td>
+                            <input type="text"class="myInput" name="truename" required>                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            确认密码：
+                        </td>
+                        <td>
+                            <input type="password"class="myInput" name="confirm_passwd" required>
+                        </td>
+                        <td class="tabtext">
+                            手机号码：
+                        </td>
+                        <td>
+                            <input type="text"class="myInput" name="tel" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            性别：
+                        </td>
+                        <td>
+                            <input type="radio" name="sex" value="male" required> 男&nbsp; &nbsp;&nbsp;     
+                            <input type="radio" name="sex" value="female" required> 女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            民族：
+                        </td>
+                        <td>
+                            <input type="text" class="myInput" name="nation" required>
+                        </td>
+                        <td class="tabtext">
+                            邮箱：
+                        </td>
+                        <td>
+                            <input type="text" class="myInput" name="email" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            爱好：
+                        </td>
+                        <td colspan="3">
+                            <input type="checkbox" name="basketball" > 篮球 &nbsp; &nbsp;
+                            <input type="checkbox" name="football" > 足球 &nbsp; &nbsp;
+                            <input type="checkbox" name="volleyball" > 排球 &nbsp; &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            国家：
+                        </td>
+                        <td>
+                            <input name="country" type="text" class="myInput" required>
+                        </td>
+                        <td class="tabtext">
+                            城市：
+                        </td>
+                        <td>
+                            <input name="city" type="text" class="myInput" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tabtext">
+                            照片上传：
+                        </td>
+                        <td>
+                            <input type="file" name="file" id="file" accept="image/*" multiple required>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td class="tabtext">
+                            个人说明：
+                        </td>
+                        <td>
+                            <textarea cols="30" rows="5" required></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <div style="width: 70%; display: flex; justify-content: space-between; flex-direction: row;">
+                    <input id="subbtn" class="btn" type="button" value="立即注册">
+                    <input id="resbtn" class="btn" type="reset" value="重置">
+                </div>
+            </form>
+        </div>
+        <script>
+            let reset = ()=>{
+                document.querySelectorAll('.myInput').forEach((item)=>{
+                    item.value = "";
+                })
+            };
+            let butt = document.querySelector('#subbtn');
+            butt.style['background']='grey';
+            butt['type'] = 'button';
+            butt['cursor'] = 'not-allowed';
+            let input_forms = document.querySelectorAll('input');
+            let update_btn_listener = (event)=>{
+                    let flag = 1;
+                    input_forms.forEach((item)=>{
+                        if(item.validity['valueMissing']) flag = 0;
+                    })  
+                    if(document.querySelectorAll('textarea')[0].validity['valueMissing']) {
+                        flag = 0;
+                    }
+                    if(flag) {
+                        butt.style.background='green';
+                        butt['type'] = 'submit';
+                        butt.style.cursor = 'pointer';
+                    } else {
+                        butt.style['background']='grey';
+                        butt['type'] = 'button';
+                        butt.style.cursor = 'not-allowed';
+                        console.log("Hello");
+                    }
+                };
+            input_forms.forEach((item)=>{
+                item.addEventListener('input', update_btn_listener);
+            });
+            document.querySelector('textarea').addEventListener('input', update_btn_listener);
+            document.querySelector('#resbtn').addEventListener('click', update_btn_listener);
+            //Lab3
+            error_checkers = [];
+            class ValidationError extends Error{
+                constructor(message) {
+                    super(message);
+                    this.name = "ValidationError";
+                }
+            }
+            let passwd_checker = ()=>{
+                let passwd1 = document.querySelector('input[name="passwd"]');
+                let passwd2 = document.querySelector('input[name="confirm_passwd"]');
+                if(passwd1.value != passwd2.value) {
+                    let err = new ValidationError('前后两次输入的密码不同！');
+                    throw err;
+                }
+            }
+            let telephone_checker = ()=>{
+                let telephone_obj = document.querySelector('input[name="tel"]');
+                let tele_num = telephone_obj.value;
+                let validate_tele_num = (tel) => {
+                    for(let i = 0; i < tel.length; i++) {
+                        if(!(tel[i] >= '0' && tel[i] <= '9')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                if(tele_num.length != 11 || !validate_tele_num(tele_num)) {
+                    throw new ValidationError("手机号码格式错误！");
+                }
+            }
+            let email_checker = () => {
+                let email_obj = document.querySelector('input[name="email"]');
+                let email_str = email_obj.value;
+                let error = new ValidationError("邮箱格式错误！");
+                let validate_email_str = (email_str) => {
+                    at_pos = email_str.indexOf('@');
+                    dot_pos = email_str.indexOf('.');
+                    if(at_pos == -1 || dot_pos == -1 || at_pos != email_str.lastIndexOf('@') || dot_pos != email_str.lastIndexOf('.')) {
+                        throw error; //存在@和.,并且都仅存在一个
+                    }
+                    if(at_pos > dot_pos) { // @ 在 . 之前
+                        throw error;
+                    }
+                    if(at_pos == 0 || dot_pos == email_str.length - 1 || dot_pos == at_pos + 1) {
+                        throw error; //三部分都要有内容
+                    }
+                }
+                validate_email_str(email_str);
+            }
+            error_checkers.push(passwd_checker);
+            error_checkers.push(telephone_checker);
+            error_checkers.push(email_checker);
+            function checkValidity(event)  {
+                console.log("test");
+                try {
+                    for(let error_checker of error_checkers) error_checker();
+                } catch(err) {
+                    alert(err.message+"请重新输入！");
+                    event.preventDefault();
+                    // butt.addEventListener('submit', ()=>false);
+                    // document.querySelector('form').addEventListener('submit', ()=>false);
+                    // return false;
+                }
+            }
+            document.querySelector('form').onsubmit = checkValidity;
+        </script>
+    </body>
+</html>
