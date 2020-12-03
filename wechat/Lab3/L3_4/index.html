@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <style>
+            img{
+                display: inline;
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                left: 500px;
+                top: 500px
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="toggleRandomMove()">随机改变位置</button>
+        <button onclick="toggleRandomSwim()">随机游走</button>
+        <img src="http://www.zju.edu.cn/_upload/article/images/98/48/66593c0c4487972f8c5c36c5df97/05381ac0-bd09-4d39-acc7-86f64fc1f5dd.png">
+        <script>
+            let image_obj = document.querySelector('img');
+            let w_width = window.screen.availWidth - 200;
+            let w_height = window.screen.availHeight - 200;
+            let width = w_width * Math.random();
+            let height = w_height * Math.random();
+            image_obj.style.left = width;
+            image_obj.style.top = height;
+            function randomMove() {
+                let width = w_width * Math.random();
+                let height = w_height * Math.random();
+                image_obj.style.left = width + 'px';
+                image_obj.style.top = height + 'px';
+            }
+            let randomMoveFlag = 0;
+            let randomMoveTimer = 0;
+            function startRandomMove() {
+                randomMoveTimer = setInterval(randomMove, 1000);
+            }
+            function toggleRandomMove(){
+                randomMoveFlag ^= 1;
+                if(randomMoveFlag) {
+                    startRandomMove();
+                } else {
+                    clearInterval(randomMoveTimer);
+                }
+            }
+            let vx = 3;
+            let vy = 3;
+            function randomSwim() {
+                if(width + vx > w_width || width + vx < 0) vx = -vx;
+                if(height + vy > w_height || height + vy < 0) vy = -vy;
+                width += vx;
+                height += vy;
+                image_obj.style.left = (width)+"px";
+                image_obj.style.top = (height)+"px";
+            }
+            let randomSwimFlag = 0;
+            let randomSwimTimer = 0;
+            function startRandomSwim() {
+                randomSwimTimer = setInterval(randomSwim, 10);
+            }
+            function toggleRandomSwim() {
+                randomSwimFlag ^= 1;
+                if(randomSwimFlag) {
+                    startRandomSwim();
+                }else {
+                    clearInterval(randomSwimTimer);
+                }
+            }
+        </script>
+    </body>
+</html>
